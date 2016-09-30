@@ -11,12 +11,12 @@ module.exports = function () {
   return Object.assign(base, {
 
     target: 'node',
-    devtool: false,
+    devtool: '#source-map',
     entry: Config.get('app.project.entry'),
 
     output: {
       path: Config.get('app.project.dist'),
-      filename: 'server.js',
+      filename: 'index.js',
       libraryTarget: 'commonjs2'
     },
 

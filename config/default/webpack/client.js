@@ -57,7 +57,7 @@ module.exports = function () {
     config.plugins.push(new Webpack.NoErrorsPlugin());
 
     // Optimize module ids by occurence count
-    config.plugins.push(new Webpack.optimize.OccurenceOrderPlugin());
+    //config.plugins.push(new Webpack.optimize.OccurenceOrderPlugin());
 
   }
 

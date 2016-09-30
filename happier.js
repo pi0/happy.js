@@ -1,6 +1,7 @@
 const config = require('./config');
-const Kernel = require('./core/kernel');
+const kernel = require('./core/kernel');
 
 module.exports = {
   config,
+  kernel,
 };

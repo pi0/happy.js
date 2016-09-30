@@ -25,27 +25,28 @@ module.exports = function () {
       alias: Config.get('client.project.aliases'),
     },
 
-    plugins: [
-
-      // vue-loader configurations
-      new webpack.LoaderOptionsPlugin({
-        vue: {
-
-          // Configure autoprefixer
-          autoprefixer: {
-            browsers: ['last 2 versions']
-          },
-
-          // Loaders
-          loaders: {
-            scss: ExtractTextPlugin.extract({
-              loader: "css-loader!scss-loader",
-              fallbackLoader: "vue-style-loader" // <- this is a dep of vue-loader
-            })
-          },
-        }
-      }),
-    ],
+    plugins:[],
+    // plugins: [
+    //
+    //   // vue-loader configurations
+    //   new webpack.LoaderOptionsPlugin({
+    //     vue: {
+    //
+    //       // Configure autoprefixer
+    //       autoprefixer: {
+    //         browsers: ['last 2 versions']
+    //       },
+    //
+    //       // Loaders
+    //       loaders: {
+    //         scss: ExtractTextPlugin.extract({
+    //           loader: "css-loader!scss-loader",
+    //           fallbackLoader: "vue-style-loader" // <- this is a dep of vue-loader
+    //         })
+    //       },
+    //     }
+    //   }),
+    // ],
 
     module: {
       loaders: [

@@ -5,9 +5,9 @@ const DevServer=require('./dev-server');
 module.exports = function(){
 
   return {
-    client: Client(),
+    //client: Client(),
     server: Server(),
-    dev_server: DevServer(),
+    //dev_server: DevServer(),
   }
 
 };

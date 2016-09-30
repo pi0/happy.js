@@ -24,3 +24,5 @@ function boot() {
   });
 
 }
+
+module.exports.boot = boot;

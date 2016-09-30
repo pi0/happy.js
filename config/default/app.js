@@ -6,14 +6,13 @@ var config = {};
 
 module.exports = function () {
 
-  config.dirs = Config.has('app.dirs') ? Config.get('app.dirs') : ['app', 'config', 'routes'];
+  config.dirs = Config.has('app.dirs') ? Config.get('app.dirs') : ['app', 'config','vendor'];
 
   config.project = {
-    entry: Utils.projectPath('index.js'),
+    entry: Utils.projectPath('app/http'),
     src: Utils.projectPath('{' + config.dirs.join(',') + '}/**/*.js'),
-    build: Utils.projectPath('storage/build/server'),
     routes: Utils.projectPath('app/http/routes'),
-    dist: path.resolve(Utils.projectRoot, 'storage/dist'),
+    dist: path.resolve(Utils.projectRoot, 'dist'),
   };
 
   config.babel = {
@@ -29,7 +28,7 @@ module.exports = function () {
   config.nodemon = {
 
     // Nodemon the dev server
-    script: path.resolve(config.project.build, 'app/http/kernel.js'),
+    script: path.resolve(config.project.dist,'app/http'),
 
     // Watch core server file(s) that require restart on change
     watch: config.dirs.map(function (d) {

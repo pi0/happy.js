@@ -9,6 +9,7 @@ process.env.ALLOW_CONFIG_MUTATIONS = 'y';
 const Config = require('config');
 const AppConfig = require('./default/app');
 const ClientConfig = require('./default/client');
+const WebpackConfig = require('./default/webpack');
 const Utils = require('../utils');
 
 // Get
@@ -37,16 +38,5 @@ var loadedConfigs = Config.has('happier') ? Utils.deepClone(Config.get('happier'
 Config.util.setModuleDefaults('happier', loadedConfigs);
 
 extend({'app': AppConfig()}, loadedConfigs);
-
 extend({'client': ClientConfig()}, loadedConfigs);
-
-// Init webpack
-var __webpack_init = false;
-function initWebpack() {
-  if (__webpack_init)
-    return;
-  __webpack_init = true;
-  const WebpackConfig = require('./default/webpack');
-  extend({'webpack': WebpackConfig()}, loadedConfigs);
-}
-module.exports.initWebpack = initWebpack;
+extend({'webpack': WebpackConfig()}, loadedConfigs);

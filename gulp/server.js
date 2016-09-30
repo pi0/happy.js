@@ -16,7 +16,7 @@ const Webpack = require('webpack');
 
 var __compile_cache = null;
 
-Gulp.task('compile2', function () {
+Gulp.task('compile', function () {
 
   // Initialize compile cache
   if (__compile_cache == null)
@@ -35,14 +35,21 @@ Gulp.task('compile2', function () {
   stream.pipe(__compile_cache.cache());
 
   // Write them
-  stream.pipe(Gulp.dest(Happier.config.get('app.project.build')));
+  stream.pipe(Gulp.dest(Happier.config.get('app.project.dist')));
 
   // important for gulp-nodemon to wait for completion
   return stream;
 });
 
-Gulp.task('compile', function (cb) {
+/*
+ |--------------------------------------------------------------------------
+ | Bundle (Beta)
+ |--------------------------------------------------------------------------
+ |
+ */
 
+Gulp.task('bundle', function (cb) {
+  console.log("WARN: BUNDLE FEATURE IS STILL IN BETA!!");
   Webpack(Happier.config.get('webpack.server'),function(err, stats) {
     if(err) throw new Gutil.PluginError("webpack", err);
     Gutil.log("[webpack]", stats.toString({
@@ -51,8 +58,6 @@ Gulp.task('compile', function (cb) {
     }));
     cb();
   });
-
-
 });
 
 /*
