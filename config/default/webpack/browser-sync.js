@@ -1,3 +1,7 @@
+const Config = require('../../../config');
+const Utils = require('../../../utils');
+const Path = require('path');
+
 module.exports = function () {
   return {
 
@@ -33,7 +37,7 @@ module.exports = function () {
 
     // Attempt to use the URL "http://my-private-site.localtunnel.me"
     // Set to null to disable this
-    tunnel: ClientConfig.tunnel,
+    tunnel: Config.get('client.tunnel'),
 
     // Will not attempt to determine your network status, assumes you're ONLINE.
     online: true,

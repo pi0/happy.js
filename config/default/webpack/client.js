@@ -30,7 +30,7 @@ module.exports = function () {
 
     // BrowserSync Plugin
     const BrowserSyncPlugin = require('browser-sync-Webpack-plugin');
-    config.plugins.push(new BrowserSyncPlugin(BrowserSyncConfig, {
+    config.plugins.push(new BrowserSyncPlugin(BrowserSyncConfig(), {
       // prevent BrowserSync from reloading the page.
       // and let Webpack Dev Server take care of this
       reload: true,

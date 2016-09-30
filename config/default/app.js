@@ -6,7 +6,7 @@ var config = {};
 
 module.exports = function () {
 
-  config.dirs = Config.has('app.dirs') ? Config.get('app.dirs') : ['app', 'config','vendor'];
+  config.dirs = Config.has('app.dirs') ? Config.get('app.dirs') : ['app', 'config'];
 
   config.project = {
     entry: Utils.projectPath('app/http'),
