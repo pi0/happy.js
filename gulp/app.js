@@ -23,7 +23,7 @@ Gulp.task('compile', function () {
     __compile_cache = new Cache();
 
   // Project ES2015 Source code
-  var stream = Gulp.src(Happier.config.get('app.project.src'));
+  var stream = Gulp.src(Happier.config.get('app.src'));
 
   // Remember files
   stream.pipe(__compile_cache.filter());
@@ -35,7 +35,7 @@ Gulp.task('compile', function () {
   stream.pipe(__compile_cache.cache());
 
   // Write them
-  stream.pipe(Gulp.dest(Happier.config.get('app.project.dist')));
+  stream.pipe(Gulp.dest(Happier.config.get('app.dist')));
 
   // important for gulp-nodemon to wait for completion
   return stream;
@@ -50,7 +50,7 @@ Gulp.task('compile', function () {
 
 Gulp.task('bundle', function (cb) {
   console.log("WARN: BUNDLE FEATURE IS STILL IN BETA!!");
-  Webpack(Happier.config.get('webpack.server'),function(err, stats) {
+  Webpack(Happier.config.get('build.server'),function(err, stats) {
     if(err) throw new Gutil.PluginError("webpack", err);
     Gutil.log("[webpack]", stats.toString({
       color:true,

@@ -6,24 +6,22 @@ var config = {};
 
 module.exports = function () {
 
-  config.project = {
-    root: Utils.projectRoot,
-    entry: path.resolve(Utils.projectRoot, 'resources/assets/js/client-entry.js'),
-    entry_app: path.resolve(Utils.projectRoot, 'resources/assets/js/app-entry.js'),
-    public: path.resolve(Utils.projectRoot, 'public'),
-    dist: path.resolve(Utils.projectRoot, 'public/dist'),
-    dist_app: path.resolve(Utils.projectRoot, 'dist'),
-    aliases: {
-      'components': path.resolve(Utils.projectRoot, 'resources/assets/js/components'),
-      'js': path.resolve(Utils.projectRoot, 'resources/assets/js'),
-      'vendor': path.resolve(Utils.projectRoot, 'resources/vendor'),
-      'element-ui': path.resolve(Utils.projectRoot, 'resources/assets/vendor/element-ui/lib'),
-    },
-    vendor: [
-      'vue',
-      'element-ui',
-    ],
+  config.root = Utils.projectRoot;
+  config.entry = path.resolve(Utils.projectRoot, 'client/client-entry.js');
+  config.entry_app = path.resolve(Utils.projectRoot, 'client/app-entry.js');
+  config.public = path.resolve(Utils.projectRoot, 'public');
+  config.dist = path.resolve(Utils.projectRoot, 'public/dist');
+  config.dist_app = path.resolve(Utils.projectRoot, 'dist');
+
+  config.aliases = {
+    'vendor': path.resolve(Utils.projectRoot, 'resources/vendor'),
+    'element-ui': path.resolve(Utils.projectRoot, 'client/vendor/element-ui'),
   };
+
+  config.vendor = [
+    'vue',
+    'element-ui',
+  ];
 
   config.scripts = {
     vendor: []
@@ -35,7 +33,7 @@ module.exports = function () {
     ],
     vendor: [
       'resources/assets/vendor/' + 'element-ui/lib/theme-default/*.css',
-    ]
+    ],
   };
 
   // Attempt to use the URL "http://my-private-site.localtunnel.me"

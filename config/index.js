@@ -9,7 +9,7 @@ process.env.ALLOW_CONFIG_MUTATIONS = 'y';
 const Config = require('config');
 const AppConfig = require('./default/app');
 const ClientConfig = require('./default/client');
-const WebpackConfig = require('./default/webpack');
+const BuildConfig = require('./default/build');
 const Utils = require('../utils');
 
 // Get
@@ -39,4 +39,4 @@ Config.util.setModuleDefaults('happier', loadedConfigs);
 
 extend({'app': AppConfig()}, loadedConfigs);
 extend({'client': ClientConfig()}, loadedConfigs);
-extend({'webpack': WebpackConfig()}, loadedConfigs);
+extend({'build': BuildConfig()}, loadedConfigs);

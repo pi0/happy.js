@@ -11,7 +11,7 @@ module.exports = function (server) {
     options: {
 
       // The absolute path to the routes directory.
-      routes: Config.get('app.project.routes'),
+      routes: Config.get('app.routes'),
 
       // The glob pattern or an array of patterns to exclude route files.
       // ignore: 'foo/**/*.js',
@@ -30,6 +30,6 @@ module.exports = function (server) {
 
 // server.register([Inert], function (err) {
 //   if (err) throw err;
-//   var Routes = require(config.get('app.project.routes'));
+//   var Routes = require(config.get('app.routes'));
 //   Routes(server);
 // });

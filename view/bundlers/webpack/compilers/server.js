@@ -5,7 +5,7 @@ const Config = require('../../../../config');
 
 module.exports = function (server, onUpdate) {
 
-  const clientAppConfig = Config.get('webpack.app');
+  const clientAppConfig = Config.get('build.app');
 
   // Watch and update server renderer
   const serverCompiler = webpack(clientAppConfig);

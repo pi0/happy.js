@@ -7,18 +7,19 @@ const HapiWebpackHotMiddleware = require('../middleware/hapi-webpack-hot-middlew
 
 module.exports = function (server, onUpdate) {
 
-  const clientConfig = Config.get('webpack.client');
+  const clientConfig = Config.get('build.client');
 
   // Setup on the fly compilation + hot-reload
   clientConfig.entry.app = [
     clientConfig.entry.app,
     'webpack-hot-middleware/client'
   ];
-  clientConfig.plugins = [];
-  clientConfig.plugins.push(
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
-  );
+
+  //
+  clientConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
+
+  //
+  clientConfig.plugins.push(new webpack.NoErrorsPlugin());
 
   // Register Middlewares
   server.register([

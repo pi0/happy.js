@@ -3,6 +3,7 @@ const BaseConfig = require('./base');
 const DevServer = require('./dev-server');
 const BrowserSyncConfig = require('./browser-sync');
 const Config = require('../../../config');
+const Utils = require('../../../utils');
 
 module.exports = function () {
 
@@ -10,15 +11,14 @@ module.exports = function () {
   var config = BaseConfig();
 
   config.entry = {
-    app: Config.get('client.project.entry'),
-    vendor: Config.get('client.project.vendor'),
+    app: Config.get('client.entry'),
+    vendor: Config.get('client.vendor'),
   };
 
-  config.output = {
-    path: Config.get('client.project.dist'),
-    //filename: 'client-entry.js',
+  config.output = Object.assign({
+    path: Config.get('client.dist'),
     publicPath: '/dist/',
-  };
+  }, config.output);
 
   // Extract vendor chunks for better caching
   config.plugins.push(new Webpack.optimize.CommonsChunkPlugin({
@@ -26,17 +26,10 @@ module.exports = function () {
     filename: 'vendor.js'
   }));
 
-
-  if (process.env.NODE_ENV !== 'production') {
+  if (!Utils.isProd) {
 
     // HMR Plugin
     config.plugins.push(new Webpack.HotModuleReplacementPlugin());
-
-    // Enable watch
-    config.watch = true;
-
-    // Source maps
-    // config.devtool = '#source-map';
 
     // DevServer config
     config.devServer = DevServer;
@@ -46,7 +39,7 @@ module.exports = function () {
     config.plugins.push(new BrowserSyncPlugin(BrowserSyncConfig(), {
       // prevent BrowserSync from reloading the page.
       // and let Webpack Dev Server take care of this
-      reload: true,
+      reload: false
     }));
 
   } else { // Production

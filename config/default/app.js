@@ -2,18 +2,16 @@ const path = require('path');
 const Utils = require('../../utils');
 const Config = require('../../config');
 
-var config = {};
-
 module.exports = function () {
+
+  var config = {};
 
   config.dirs = Config.has('app.dirs') ? Config.get('app.dirs') : ['app', 'config'];
 
-  config.project = {
-    entry: Utils.projectPath('app/http'),
-    src: Utils.projectPath('{' + config.dirs.join(',') + '}/**/*.js'),
-    routes: Utils.projectPath('app/http/routes'),
-    dist: path.resolve(Utils.projectRoot, 'dist'),
-  };
+  config.entry = Utils.projectPath('app/http');
+  config.src = Utils.projectPath('{' + config.dirs.join(',') + '}/**/*.js');
+  config.routes = Utils.projectPath('app/routes');
+  config.dist = path.resolve(Utils.projectRoot, 'dist');
 
   config.babel = {
     "presets": [
@@ -25,25 +23,10 @@ module.exports = function () {
     port: 3003
   };
 
-  config.nodemon = {
-
-    // Nodemon the dev server
-    script: path.resolve(config.project.dist,'app/http'),
-
-    // Watch core server file(s) that require restart on change
-    watch: config.dirs.map(function (d) {
-      return path.resolve(Utils.projectRoot, d);
-    }),
-
-    // Options
-    verbose: false,
-    debug: 3009,
-
-    // Compile synchronously onChange
-    tasks: ['compile']
-
-  };
-
+  const Nodemon = require('./build/nodemon');
+  config.nodemon = Nodemon(config.dirs.map(function (d) {
+    return path.resolve(Utils.projectRoot, d);
+  }));
 
   return config;
 };

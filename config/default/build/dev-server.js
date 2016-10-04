@@ -5,7 +5,7 @@ module.exports = function () {
 
     // Used for iframe
     // Can also be an array, or: contentBase: "http://localhost/",
-    // contentBase: ClientConfig.project.public,
+    // contentBase: ClientConfig.public,
 
     // Enable special support for Hot Module Replacement
     // Page is no longer updated, but a "webpackHotUpdate" message is send to the content

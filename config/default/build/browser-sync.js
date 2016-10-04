@@ -15,7 +15,7 @@ module.exports = function () {
     injectChanges: true,
 
     // Inject html changes
-    plugins: ["bs-html-injector?files[]=*.html"],
+    // plugins: ["bs-html-injector?files[]=*.html"],
 
     // Open Browser ?
     open: false,
@@ -31,7 +31,7 @@ module.exports = function () {
     // proxy the Webpack Dev Server endpoint through BrowserSync
     proxy: {
       target: 'http://localhost:3002/webpack-dev-server/',
-      // serveStatic: [ClientConfig.project.public],
+      // serveStatic: [ClientConfig.public],
       ws: true,
     },
 

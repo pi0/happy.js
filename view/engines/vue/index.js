@@ -33,7 +33,7 @@ module.exports = function (path) {
       return res.end(html.tail);
     }
 
-    var s = Date.now();
+    // var s = Date.now();
     const context = {url: req.url};
     const renderStream = renderer.renderToStream(context);
     let firstChunk = true;
@@ -53,7 +53,7 @@ module.exports = function (path) {
 
     renderStream.on('end', () => {
       res.end(html.tail);
-      console.log(`whole request: ${Date.now() - s}ms`)
+      // console.log(`whole request: ${Date.now() - s}ms`)
     });
 
     renderStream.on('error', err => {
