@@ -1,12 +1,12 @@
 const Client=require('./client');
-const Server=require('./server');
+const App=require('./app');
 const DevServer=require('./dev-server');
 
 module.exports = function(){
 
   return {
     client: Client(),
-    server: Server(),
+    app: App(),
     dev_server: DevServer(),
   }
 

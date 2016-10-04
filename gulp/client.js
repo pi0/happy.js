@@ -7,24 +7,37 @@ const Happier = require('../happier');
 
 /*
  |--------------------------------------------------------------------------
- | Client Webpack
+ | Client
  |--------------------------------------------------------------------------
  |
  */
 
 Gulp.task("client", function (cb) {
 
-  // Webpack compiler
-  var compiler = Webpack(Happier.config.get('webpack.client'));
+  // Compile for web browser
+  var compilerBrowser = Webpack(Happier.config.get('webpack.client'));
+  compilerBrowser.run(function (err,stats) {
+    if(err) throw new Gutil.PluginError("webpack:build-dev", err);
+    Gutil.log("[]", stats.toString({
+      colors: true
+    }));
+  });
+
+  // Compile for app
+  var compilerApp = Webpack(Happier.config.get('webpack.app'));
+  compilerApp.run(function (err,stats) {
+    if(err) throw new Gutil.PluginError("webpack:build-dev", err);
+    Gutil.log("[]", stats.toString({
+      colors: true
+    }));
+  });
 
   // Webpack Dev Server
-  var devServerConfig = Happier.config.get('webpack.dev_server');
-  var devServer = new WebpackDevServer(compiler, devServerConfig);
-  devServer.listen(devServerConfig.port, 'localhost', function (err) {
-
-    if (err) throw new Gutil.PluginError("webpack-dev-server", err);
-    cb();
-
-  });
+  // var devServerConfig = Happier.config.get('webpack.dev_server');
+  // var devServer = new WebpackDevServer(compiler, devServerConfig);
+  // devServer.listen(devServerConfig.port, 'localhost', function (err) {
+  //   if (err) throw new Gutil.PluginError("webpack-dev-server", err);
+  //   cb();
+  // });
 
 });

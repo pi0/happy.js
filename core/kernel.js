@@ -1,8 +1,13 @@
 const Hapi = require('hapi');
 const Inert = require('inert');
 const config = require('../config');
+const Router = require('./router');
+const View = require('../view');
 
 function boot() {
+
+  //
+  var kernel={};
 
   // Create new server
   const server = new Hapi.Server();
@@ -11,11 +16,10 @@ function boot() {
   server.connection(config.get('app.connection'));
 
   // Setup routes
-  server.register([Inert], function (err) {
-    if (err) throw err;
-    const Routes = require(config.get('app.project.routes'));
-    Routes(server);
-  });
+  Router(server);
+
+  // Setup View Engine
+  kernel.view=View(server);
 
   // Start server
   server.start((err) => {
@@ -23,6 +27,7 @@ function boot() {
     console.log('Server running at: ', server.info.uri);
   });
 
+  return kernel;
 }
 
-module.exports.boot = boot;
+module.exports = boot;

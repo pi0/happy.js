@@ -10,6 +10,9 @@ function projectPath(path) {
 }
 module.exports.projectPath=projectPath;
 
+// IsProd
+const isProd = process.env.NODE_ENV === 'production';
+module.exports.isProd=isProd;
 
 // Deep Clone
 function deepClone(a) {

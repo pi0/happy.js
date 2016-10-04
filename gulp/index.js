@@ -2,7 +2,7 @@
 process.env.DISABLE_NOTIFIER = true;
 
 // Server Tasks
-require('./server');
+require('./app');
 
 // Client Tasks
 require('./client');

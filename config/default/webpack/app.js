@@ -5,6 +5,7 @@ const Utils = require('../../../utils');
 const Path = require('path');
 
 module.exports = function () {
+
   // Extend Base Config
   var base = BaseConfig();
 
@@ -12,11 +13,11 @@ module.exports = function () {
 
     target: 'node',
     devtool: '#source-map',
-    entry: Config.get('app.project.entry'),
+    entry: Config.get('client.project.entry_app'),
 
     output: {
-      path: Config.get('app.project.dist'),
-      filename: 'index.js',
+      path: Config.get('client.project.dist_app'),
+      filename: 'app-entry.js',
       libraryTarget: 'commonjs2'
     },
 
@@ -34,6 +35,7 @@ module.exports = function () {
     ],
 
     plugins: [
+      new Webpack.IgnorePlugin(/vertx/),
       new Webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
         'process.env.VUE_ENV': '"server"'

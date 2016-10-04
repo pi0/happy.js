@@ -7,18 +7,6 @@ module.exports = function () {
 
   return {
 
-    // Entry-point of our application
-    entry: {
-      app: Config.get('client.project.entry'),
-      vendor: Config.get('client.project.vendor'),
-    },
-
-    // Where to place the compiled bundle
-    output: {
-      publicPath: '/dist/',
-      path: Config.get('client.project.dist'),
-    },
-
     // Resolver config
     resolve: {
       extensions: ['', '.js', '.vue'],

@@ -2,17 +2,30 @@ const Webpack = require('webpack');
 const BaseConfig = require('./base');
 const DevServer = require('./dev-server');
 const BrowserSyncConfig = require('./browser-sync');
+const Config = require('../../../config');
 
 module.exports = function () {
 
   // Extend Base Config
   var config = BaseConfig();
 
+  config.entry = {
+    app: Config.get('client.project.entry'),
+    vendor: Config.get('client.project.vendor'),
+  };
+
+  config.output = {
+    path: Config.get('client.project.dist'),
+    //filename: 'client-entry.js',
+    publicPath: '/dist/',
+  };
+
   // Extract vendor chunks for better caching
   config.plugins.push(new Webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
     filename: 'vendor.js'
   }));
+
 
   if (process.env.NODE_ENV !== 'production') {
 
@@ -23,7 +36,7 @@ module.exports = function () {
     config.watch = true;
 
     // Source maps
-    config.devtool = '#source-map';
+    // config.devtool = '#source-map';
 
     // DevServer config
     config.devServer = DevServer;
