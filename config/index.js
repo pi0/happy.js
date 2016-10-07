@@ -7,28 +7,25 @@ process.env.SUPPRESS_NO_CONFIG_WARNING = 'y';
 process.env.ALLOW_CONFIG_MUTATIONS = 'y';
 
 const Config = require('config');
-const AppConfig = require('./default/app');
-const ClientConfig = require('./default/client');
-const BuildConfig = require('./default/build');
 const Utils = require('../utils');
 
 // Get
 function get(key) {
-  return Config.get('happier.' + key)
+    return Config.get('happier.' + key)
 }
 module.exports.get = get;
 
 // Has
 function has(key) {
-  return Config.has('happier.' + key)
+    return Config.has('happier.' + key)
 }
 module.exports.has = has;
 
 // Extend
 function extend(configs, force_keep) {
-  Config.util.extendDeep(Config.happier, configs);
-  if (force_keep != null)
-    Config.util.extendDeep(Config.happier, force_keep);
+    Config.util.extendDeep(Config.happier, configs);
+    if (force_keep != null)
+        Config.util.extendDeep(Config.happier, force_keep);
 }
 module.exports.exntend = extend;
 
@@ -36,7 +33,7 @@ module.exports.exntend = extend;
 // but keep already loaded configs
 var loadedConfigs = Config.has('happier') ? Utils.deepClone(Config.get('happier')) : {};
 Config.util.setModuleDefaults('happier', loadedConfigs);
-
-extend({'app': AppConfig()}, loadedConfigs);
-extend({'client': ClientConfig()}, loadedConfigs);
-extend({'build': BuildConfig()}, loadedConfigs);
+extend({
+    'app': require('./app.config'),
+    'client': require('./client.config'),
+}, loadedConfigs);

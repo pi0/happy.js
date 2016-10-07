@@ -5,26 +5,21 @@ const VueEngine = require('./engines/vue');
 
 module.exports = function (server) {
 
-  //
-  var view = {};
+    var view = {};
 
-  // Setup Webpack
-  const webpack = require('./bundlers/webpack');
-  webpack.setup(server);
+    // View Engines
+    view.engines = {};
 
-  // View Engines
-  view.engines = {};
+    // Setup Vue
+    view.engines.vue = VueEngine('public/index.html');
 
-  // Setup Vue
-  view.engines.vue = VueEngine('public/index.html');
+    // Setup Vision
+    server.register(Vision, function (err) {
+        if (err) {
+            console.log("Failed to load vision.");
+        }
+        // TODO
+    });
 
-  // Setup Vision
-  server.register(Vision, function (err) {
-    if (err) {
-      console.log("Failed to load vision.");
-    }
-    // TODO
-  });
-
-  return view;
+    return view;
 };

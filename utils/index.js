@@ -6,7 +6,7 @@ module.exports.projectRoot=projectRoot;
 
 // Project Path
 function projectPath(path) {
-  return Path.resolve(projectRoot,path);
+  return Path.resolve(projectRoot,path).replace(/\\/g,"/");
 }
 module.exports.projectPath=projectPath;
 

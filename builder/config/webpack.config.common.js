@@ -1,7 +1,5 @@
-const ExtractTextPlugin = require('extract-text-Webpack-plugin');
 const path = require('path');
-const Webpack = require('Webpack');
-const Config = require('../../../config');
+const Config = require('../../config');
 
 module.exports = function () {
 
@@ -9,7 +7,7 @@ module.exports = function () {
 
   // Resolver config
   config.resolve = {
-    extensions: ['', '.js', '.vue'],
+    extensions: ['.js', '.vue'],
     alias: Config.get('client.aliases'),
   };
 
@@ -18,41 +16,17 @@ module.exports = function () {
   // Enable watch
   config.watch = true;
   config.watchOptions = {
-    aggregateTimeout: 1000,
-    poll: true,
+    aggregateTimeout: 3000,
+    poll: 2000,
+    watchDelay:2000,
   };
 
-
   config.output = {
-    // change WebpackJsonp function
+    // Change WebpackJsonp function
     jsonpFunction: '_jsp',
   };
 
   config.plugins = [];
-
-  // vue-loader configurations
-  config.plugins.push(new Webpack.LoaderOptionsPlugin({
-    vue: {
-
-      // Configure autoprefixer
-      autoprefixer: {
-        browsers: ['last 2 versions']
-      },
-
-      // Loaders
-      loaders: {
-        scss: ExtractTextPlugin.extract({
-          loader: "css-loader!scss-loader",
-          fallbackLoader: "vue-style-loader" // <- this is a dep of vue-loader
-        })
-      },
-    }
-  }));
-
-  // WatchIgnorePlugin
-  // config.plugins.push(new Webpack.WatchIgnorePlugin(/app/));
-  // config.plugins.push(new Webpack.WatchIgnorePlugin(/config/));
-  // config.plugins.push(new Webpack.WatchIgnorePlugin(/node_modules/));
 
   config.module = {
     loaders: [
@@ -85,6 +59,11 @@ module.exports = function () {
         test: /\.css$/,
         loader: 'style!css'
       },
+      // SCSS
+      {
+        test: /\.scss$/,
+        loader: 'css-loader!postcss-loader!sass-loader'
+      },
       // Font
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
@@ -102,6 +81,7 @@ module.exports = function () {
         }
       },
     ]
+
   };
 
   return config;

@@ -1,15 +1,13 @@
-const Config = require('../../../config');
-const Utils = require('../../../utils');
-const Path = require('path');
+const Config = require('../../config');
 
 module.exports = function () {
   return {
 
     // Browser Sync Listening Port
-    port: 3000,
+    port: 3001,
 
     // Reload Delay
-    reloadDelay: 500,
+    reloadDelay: 0,
 
     // Inject CSS changes
     injectChanges: true,
@@ -22,15 +20,15 @@ module.exports = function () {
 
     // Change the default weinre port
     ui: {
-      port: 3001,
+      port: 3002,
       weinre: {
-        port: 2999
+        port: 3003
       }
     },
 
     // proxy the Webpack Dev Server endpoint through BrowserSync
     proxy: {
-      target: 'http://localhost:3002/webpack-dev-server/',
+      target: 'http://localhost:'+Config.get('app.connection.port'),
       // serveStatic: [ClientConfig.public],
       ws: true,
     },
@@ -48,6 +46,5 @@ module.exports = function () {
     ],
 
   };
+
 };
-
-

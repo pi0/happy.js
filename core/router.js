@@ -4,9 +4,7 @@ const Config = require('../config');
 
 module.exports = function (server) {
 
-  console.log('Initializing routes ...');
-
-  server.register({
+  const plugin = {
     register: Wurst,
     options: {
 
@@ -17,15 +15,18 @@ module.exports = function (server) {
       // ignore: 'foo/**/*.js',
 
       // If true, the plugin logs the prefixed routes into console.
-      log: true,
+      log: false,
 
     }
-  }, function (err) {
+  };
+
+  server.register(plugin, function (err) {
     if (err) {
       throw err;
     }
   });
 
+  return plugin;
 };
 
 // server.register([Inert], function (err) {

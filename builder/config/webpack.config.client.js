@@ -1,13 +1,11 @@
 const Webpack = require('webpack');
-const BaseConfig = require('./base');
-const DevServer = require('./dev-server');
-const BrowserSyncConfig = require('./browser-sync');
-const Config = require('../../../config');
-const Utils = require('../../../utils');
+const BaseConfig = require('./webpack.config.common');
+const Config = require('../../config');
+const Utils = require('../../utils');
 
+// Extend Base Config
 module.exports = function () {
 
-  // Extend Base Config
   var config = BaseConfig();
 
   config.entry = {
@@ -17,29 +15,43 @@ module.exports = function () {
 
   config.output = Object.assign({
     path: Config.get('client.dist'),
+    filename: 'app.js',
     publicPath: '/dist/',
   }, config.output);
 
-  // Extract vendor chunks for better caching
+// Extract vendor chunks for better caching
   config.plugins.push(new Webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
     filename: 'vendor.js'
   }));
 
+// Style Loader
+  config.plugins.push(new Webpack.LoaderOptionsPlugin({
+    options: {
+      vue: {
+        loaders: {
+          'scss': 'vue-style!css!sass',
+          fallbackLoader: "vue-style-loader" // <- this is a dep of vue-loader
+        }
+      }
+    }
+  }));
+
   if (!Utils.isProd) {
+
+    // Dev server
+    // config.devServer = require('./webpack.dev-server');
 
     // HMR Plugin
     config.plugins.push(new Webpack.HotModuleReplacementPlugin());
 
-    // DevServer config
-    config.devServer = DevServer;
-
     // BrowserSync Plugin
-    const BrowserSyncPlugin = require('browser-sync-Webpack-plugin');
+    const BrowserSyncPlugin = require('../plugins/browser-sync-webpack-plugin');
+    const BrowserSyncConfig=require('./browser-sync');
     config.plugins.push(new BrowserSyncPlugin(BrowserSyncConfig(), {
-      // prevent BrowserSync from reloading the page.
-      // and let Webpack Dev Server take care of this
-      reload: false
+        // prevent BrowserSync from reloading the page.
+        // and let Webpack Dev Server take care of this
+        reload: false
     }));
 
   } else { // Production
@@ -67,5 +79,6 @@ module.exports = function () {
 
   }
 
-  return config;
+
+  return config
 };

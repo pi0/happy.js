@@ -1,25 +1,22 @@
 const Webpack = require('webpack');
-const BaseConfig = require('./base');
-const Config = require('../../../config');
-const Utils = require('../../../utils');
-const Path = require('path');
+const BaseConfig = require('./webpack.config.common');
+const Config = require('../../config');
+const Utils = require('../../utils');
 
-module.exports = function () {
+module.exports=function () {
 
-  // Extend Base Config
-  var config = Object.assign({}, BaseConfig());
+// Extend Base Config
+  var config = BaseConfig();
 
   config.target = 'node';
 
-  config.entry = [
-    Config.get('client.entry_app')
-  ];
+  config.entry = Config.get('client.entry_app');
 
   config.output = Object.assign({
     path: Config.get('client.dist_app'),
     filename: 'app-entry.js',
     libraryTarget: 'commonjs2'
-  },config.output);
+  }, config.output);
 
   config.externals = [
     'fsevents',
@@ -41,7 +38,6 @@ module.exports = function () {
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
     'process.env.VUE_ENV': '"server"'
   }));
-
 
   return config;
 };
