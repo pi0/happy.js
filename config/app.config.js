@@ -6,9 +6,9 @@ var config = {};
 
 config.dirs = Config.has('app.dirs') ? Config.get('app.dirs') : ['app', 'config'];
 
-config.entry = Utils.projectPath('app/http');
+config.entry = Utils.projectPath('index.js');
 config.src = Utils.projectPath('{' + config.dirs.join(',') + '}/**/*.js');
-config.routes = Utils.projectPath('app/routes');
+config.controllers = Utils.projectPath('app/controllers');
 config.dist = path.resolve(Utils.projectRoot, 'dist');
 
 config.babel = {

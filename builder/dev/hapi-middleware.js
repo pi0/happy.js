@@ -1,15 +1,6 @@
-function registerH2O2(server) {
-  server.register({
-    register: require('h2o2')
-  }, function (err) {
-    if (err)
-      console.error('Failed to load h2o2');
-  });
-}
-
 exports.register = (server, options, next) => {
 
-  registerH2O2(server);
+  require('../ipc/client');
 
   server.route({
     method: 'GET',
@@ -47,5 +38,10 @@ exports.register = (server, options, next) => {
     }
   });
 
-  if (next) next();
+  next();
 };
+
+exports.register.attributes = {
+  name: 'Happier.Dev.Middleware'
+};
+

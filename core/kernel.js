@@ -1,42 +1,29 @@
 const Hapi = require('hapi');
-const Inert = require('inert');
-const config = require('../config');
-const Router = require('./router');
-const View = require('../view');
-const Mongoose = require('../mongoose');
 const Config = require('../config');
+const Colors = require('colors');
+const Utils = require('../utils');
 
-function boot() {
+// Create new server
+const server = new Hapi.Server();
+module.exports = server;
 
-  var kernel = {};
+// Setup server connection
+server.connection(Config.get('app.connection'));
 
-  // Create new server
-  const server = new Hapi.Server();
-  kernel.server = server;
+// Setup all plugins
+server.register(require('./plugins'), function (err) {
 
-  // Setup server connection
-  server.connection(config.get('app.connection'));
-
-  // Setup routes
-  kernel.router = Router(server);
-
-  // Setup Webpack
-  require('../builder/ipc/client');
-  require('../builder/dev/hapi-middleware').register(server);
-
-  // Setup View Engine
-  kernel.view = View(server);
-
-  // Setup Database
-  kernel.mongoose = Mongoose(server);
+  if (err) {
+    console.error(err);
+  }
 
   // Start server
   server.start((err) => {
     if (err) throw err;
+    Utils.clearConsole();
     console.log('Server running at: ', server.info.uri);
   });
 
-  return kernel;
-}
+});
 
-module.exports = boot;
+

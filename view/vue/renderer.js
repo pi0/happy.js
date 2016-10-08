@@ -1,4 +1,4 @@
-const Utils = require('../../../utils');
+const Utils = require('../../utils');
 
 // https://github.com/vuejs/vue/blob/next/packages/vue-server-renderer/README.md#why-use-bundlerenderer
 const createBundleRenderer = require('vue-server-renderer').createBundleRenderer;
@@ -20,7 +20,7 @@ module.exports = function (cb) {
         var renderer = createRenderer(fs.readFileSync(bundlePath, 'utf-8'));
         cb(renderer);
     } else {
-        const BuilderClient = require('../../../builder/ipc/client');
+        const BuilderClient = require('../../builder/ipc/client');
         BuilderClient.onBundle(function (bundle) {
             var renderer = createRenderer(bundle);
             cb(renderer);

@@ -3,7 +3,7 @@ process.env.VUE_ENV = 'server'; // This will help rendering performance, by turn
 
 const fs = require('fs');
 const path = require('path');
-const Utils = require('../../../utils');
+const Utils = require('../../utils');
 const Serialize = require('serialize-javascript');
 const Html = require('./html');
 const Renderer = require('./renderer');
@@ -27,7 +27,7 @@ module.exports = function (path) {
     var res = request.raw.res;
 
     if (!renderer) {
-      console.error('[WARNING] Vue SSR is not available at the moment!');
+      console.error('[SSR] Vue is not available at the moment!');
       res.write(html.head);
       res.write('<div id="app"></div>');
       return res.end(html.tail);
@@ -57,7 +57,9 @@ module.exports = function (path) {
     });
 
     renderStream.on('error', err => {
-      console.error(err.stack);
+      console.error('[SSR] Compile Error : '+err);
+      res.write('<div id="app"></div>');
+      return res.end(html.tail);
     });
 
   }

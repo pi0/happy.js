@@ -1,3 +1,4 @@
+// Based on https://github.com/asilluron/hapi-mongoose/blob/master/lib/MongooseConnector.js
 const mongoose = require('mongoose');
 const EventEmitter = require('events').EventEmitter;
 
@@ -34,7 +35,7 @@ exports.register = (server, options, next) => {
     let connector = new MongooseConnector(options, server);
 
     connector.on('ready', () => {
-        console.log('[Mongoose] Ready');
+        //console.log('[Mongoose] Ready');
         server.expose('mongoose', connector.mongoose);
         server.expose('connection', connector.connection);
     });

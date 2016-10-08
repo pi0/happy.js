@@ -1,25 +1,30 @@
-const Vision = require('vision');
+// const Vision = require('vision');
 // const Path = require('path');
-const Config = require('../config');
-const VueEngine = require('./engines/vue');
+// const Config = require('../config');
+const VueEngine = require('./vue');
 
-module.exports = function (server) {
+function register(server, options, next) {
 
-    var view = {};
+  // Vue
+  const vue = VueEngine(options.template);
+  server.route({
+    method: 'GET',
+    path: '/{any*}',
+    handler: vue,
+  });
 
-    // View Engines
-    view.engines = {};
+  // Vision (TODO)
+  // server.register(Vision, function (err) {
+  //     if (err) {
+  //         console.log("Failed to load vision.");
+  //     }
+  // });
 
-    // Setup Vue
-    view.engines.vue = VueEngine('public/index.html');
+  next();
+}
 
-    // Setup Vision
-    server.register(Vision, function (err) {
-        if (err) {
-            console.log("Failed to load vision.");
-        }
-        // TODO
-    });
-
-    return view;
+register.attributes = {
+  name: 'Hapi Dev Middleware'
 };
+
+module.exports = register;

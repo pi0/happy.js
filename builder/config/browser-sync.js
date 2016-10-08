@@ -7,7 +7,7 @@ module.exports = function () {
     port: 3001,
 
     // Reload Delay
-    reloadDelay: 0,
+    // reloadDelay: 5000,
 
     // Inject CSS changes
     injectChanges: true,
@@ -15,7 +15,7 @@ module.exports = function () {
     // Inject html changes
     // plugins: ["bs-html-injector?files[]=*.html"],
 
-    // Open Browser ?
+    // Open Browser
     open: false,
 
     // Change the default weinre port

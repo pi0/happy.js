@@ -8,6 +8,7 @@ config.root = Utils.projectRoot;
 config.entry = [path.resolve(Utils.projectRoot, 'client/client-entry.js')];
 config.entry_app = [path.resolve(Utils.projectRoot, 'client/app-entry.js')];
 config.public = path.resolve(Utils.projectRoot, 'public');
+config.assets= path.resolve(Utils.projectRoot, 'public/assets');
 config.dist = path.resolve(Utils.projectRoot, 'public/dist');
 config.dist_app = path.resolve(Utils.projectRoot, 'dist');
 
