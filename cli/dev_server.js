@@ -1,12 +1,15 @@
 const Piping = require("piping");
 const Config = require('../config');
+const DevTools = require('../builder/dev');
 
-require('../builder/dev/client');
-require('../builder/dev/ssr');
+DevTools(function () {
+if (!Piping(
+    {
+      main: Config.get('app.entry'),
+      ignore: /client|public|resources|storage|.idea|.git/,
+    }
+  )) return;
+});
 
-if (!Piping({
 
-    main: Config.get('app.entry'),
-    ignore: /client|public|resources|storage|.idea|.git/,
 
-  })) return;

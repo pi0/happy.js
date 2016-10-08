@@ -2,7 +2,7 @@ const Path = require('path');
 var windows = process.platform.indexOf("win") === 0;
 
 // Method inspired by https://github.com/inxilpro/node-app-root-path#how-it-works-under-the-hood
-const projectRoot = Path.dirname(Path.resolve(__dirname).split('hpy')[0]);
+const projectRoot = Path.dirname(Path.resolve(__dirname).split('happy.js')[0]);
 module.exports.projectRoot = projectRoot;
 
 // Project Path
