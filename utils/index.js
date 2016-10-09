@@ -1,13 +1,23 @@
 const Path = require('path');
 var windows = process.platform.indexOf("win") === 0;
 
-// Method inspired by https://github.com/inxilpro/node-app-root-path#how-it-works-under-the-hood
+// Project Root
 const projectRoot = Path.dirname(Path.resolve(__dirname).split('happy.js')[0]);
 module.exports.projectRoot = projectRoot;
 
 // Project Path
 function projectPath(path) {
   return Path.resolve(projectRoot, path).replace(/\\/g, "/");
+}
+module.exports.projectPath = projectPath;
+
+// Lib Root
+const libRoot = Path.dirname(Path.resolve(__dirname));
+module.exports.libRoot = libRoot;
+
+// Project Path
+function libPath(path) {
+  return Path.resolve(libRoot, path).replace(/\\/g, "/");
 }
 module.exports.projectPath = projectPath;
 

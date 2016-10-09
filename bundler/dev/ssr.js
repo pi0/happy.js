@@ -1,6 +1,14 @@
+const Config = require('../../config');
+
 module.exports = function (cb) {
 
   var cb_exec = false;
+
+  const VueConfig = Config.get('client.view.vue');
+  if (!VueConfig.ssr) {
+    console.log('[SSR] Disabled');
+    return cb();
+  }
 
   const Webpack = require('webpack');
   const MFS = require('memory-fs');

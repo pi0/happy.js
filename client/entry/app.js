@@ -1,14 +1,22 @@
-const isDev = process.env.NODE_ENV !== 'production';
+module.exports = function (args) {
+  return function (context) {
+    return init(context, args.app, args.router, args.store);
+  }
+};
 
 // This exported function will be called by `bundleRenderer`.
 // This is where we perform data-prefetching to determine the
 // state of our application before actually rendering it.
 // Since data fetching is async, this function is expected to
 // return a Promise that resolves to the app instance.
-export default (context, app, router, store) => {
+function init(context, app, router, store) {
+  // console.log('App Entry');
 
-  // set router's location
+  // Set router's location
   router.push(context.url);
+
+  // Set Token
+  store.token = context.token;
 
   //const s = isDev && Date.now();
 
@@ -30,6 +38,7 @@ export default (context, app, router, store) => {
     // store to pick-up the server-side state without having to duplicate
     // the initial data fetching on the client.
     context.initialState = store.state;
+
     return app
   })
 }

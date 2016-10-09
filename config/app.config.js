@@ -6,7 +6,7 @@ var config = {};
 
 config.dirs = Config.has('app.dirs') ? Config.get('app.dirs') : ['app', 'config'];
 
-config.entry = Utils.projectPath('index.js');
+config.entry = Utils.projectPath('app/index.js');
 config.src = Utils.projectPath('{' + config.dirs.join(',') + '}/**/*.js');
 config.controllers = Utils.projectPath('app/controllers');
 config.dist = path.resolve(Utils.projectRoot, 'dist');

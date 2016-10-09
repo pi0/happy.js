@@ -19,13 +19,13 @@ module.exports = function () {
     publicPath: '/dist/',
   }, config.output);
 
-// Extract vendor chunks for better caching
+  // Extract vendor chunks for better caching
   config.plugins.push(new Webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
     filename: 'vendor.js'
   }));
 
-// Style Loader
+  // Style Loader
   config.plugins.push(new Webpack.LoaderOptionsPlugin({
     options: {
       vue: {
@@ -39,15 +39,12 @@ module.exports = function () {
 
   if (!Utils.isProd) {
 
-    // Dev server
-    // config.devServer = require('./webpack.dev-server');
-
     // HMR Plugin
     config.plugins.push(new Webpack.HotModuleReplacementPlugin());
 
     // BrowserSync Plugin
     const BrowserSyncPlugin = require('../plugins/browser-sync-webpack-plugin');
-    const BrowserSyncConfig=require('./browser-sync');
+    const BrowserSyncConfig = require('./browser-sync');
     config.plugins.push(new BrowserSyncPlugin(BrowserSyncConfig()));
 
   } else { // Production

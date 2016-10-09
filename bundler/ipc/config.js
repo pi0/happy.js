@@ -9,7 +9,7 @@ module.exports = function(id){
         // you may have several sockets with the same id, but if you change the appspace,
         // you will still have app specic unique sockets.
         // TODO: Namespace to project
-        appspace: 'builder.',
+        appspace: 'bundler.',
 
         // the directory in which to create or bind to a Unix Socket
         socketRoot: '/tmp/',

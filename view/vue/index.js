@@ -3,28 +3,35 @@ process.env.VUE_ENV = 'server'; // This will help rendering performance, by turn
 
 const fs = require('fs');
 const path = require('path');
-const Utils = require('../../utils');
 const Serialize = require('serialize-javascript');
 const Html = require('./html');
 const Renderer = require('./renderer');
 
-module.exports = function (path) {
+module.exports = function (options) {
 
   // Load Html
-  var html = Html(Utils.projectPath(path));
+  var html = Html(options.template);
 
   // Initialize renderer
   var renderer = false;
-  Renderer(function (r) {
-    console.log('Vue Renderer Loaded');
-    renderer = r;
-  });
+  if (options.ssr) {
+    Renderer(function (r) {
+      console.log('[SSR] [Vue] Renderer Loaded');
+      renderer = r;
+    });
+  }
 
   function handle(request, reply) {
 
     // Hapi -> Raw
     var req = request.raw.req;
     var res = request.raw.res;
+
+    if (!options.ssr) {
+      res.write(html.head);
+      res.write('<div id="app"></div>');
+      return res.end(html.tail);
+    }
 
     if (!renderer) {
       console.error('[SSR] Vue is not available at the moment!');
@@ -34,7 +41,14 @@ module.exports = function (path) {
     }
 
     // var s = Date.now();
-    const context = {url: req.url};
+
+    // Make rwquest context
+    const context = {
+      url: req.url,
+      token: req.headers.authorization,
+      initialState: {},
+    };
+
     const renderStream = renderer.renderToStream(context);
     let firstChunk = true;
 
@@ -57,7 +71,8 @@ module.exports = function (path) {
     });
 
     renderStream.on('error', err => {
-      console.error('[SSR] Compile Error : '+err);
+      console.error('[SSR] Runtime Error! ' + err);
+      console.error(err);
       res.write('<div id="app"></div>');
       return res.end(html.tail);
     });

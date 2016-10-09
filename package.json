@@ -72,12 +72,13 @@
     "babel-plugin-syntax-jsx": "latest",
     "h2o2": "latest",
     "colors": "latest",
-    "babel-register": "latest"
-  },
-  "devDependencies": {
+    "babel-register": "latest",
     "babel-polyfill": "latest",
     "glob": "latest",
     "hapi-auth-jwt2": "^7.1.3",
     "joi": "latest"
+  },
+  "devDependencies": {
+    "Color": "latest"
   }
 }

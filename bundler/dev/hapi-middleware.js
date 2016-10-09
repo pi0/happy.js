@@ -8,7 +8,7 @@ exports.register = (server, options, next) => {
     handler: {
       proxy: {
         host: 'localhost',
-        port: '3019',
+        port: '3019',//TODO
         protocol: 'http'
       }
     }
@@ -20,23 +20,12 @@ exports.register = (server, options, next) => {
     handler: {
       proxy: {
         host: 'localhost',
-        port: '3019',
+        port: '3019',//TODO
         protocol: 'http'
       }
     }
   });
 
-  server.route({
-    method: 'GET',
-    path: '/__webpack\-dev\-server__/{a*}',
-    handler: {
-      proxy: {
-        host: 'localhost',
-        port: '3019',
-        protocol: 'http'
-      }
-    }
-  });
 
   next();
 };

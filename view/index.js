@@ -6,7 +6,7 @@ const VueEngine = require('./vue');
 function register(server, options, next) {
 
   // Vue
-  const vue = VueEngine(options.template);
+  const vue = VueEngine(options.vue);
   server.route({
     method: 'GET',
     path: '/{any*}',

@@ -1,5 +1,5 @@
 const ipc = require('node-ipc');
-ipc.config = require('./config')('builder');
+ipc.config = require('./config')('bundler');
 
 ipc.serve(function () {
 

@@ -5,17 +5,23 @@ const Config = require('../config');
 var config = {};
 
 config.root = Utils.projectRoot;
-config.entry = [path.resolve(Utils.projectRoot, 'client/client-entry.js')];
-config.entry_app = [path.resolve(Utils.projectRoot, 'client/app-entry.js')];
+config.entry = [path.resolve(Utils.projectRoot, 'client/index.js')];
 config.public = path.resolve(Utils.projectRoot, 'public');
-config.assets= path.resolve(Utils.projectRoot, 'public/assets');
+config.assets = path.resolve(Utils.projectRoot, 'public/assets');
 config.dist = path.resolve(Utils.projectRoot, 'public/dist');
 config.dist_app = path.resolve(Utils.projectRoot, 'dist');
 
-config.aliases = {
-  // 'element-ui': path.resolve(Utils.projectRoot, 'client/vendor/element-ui'),
-  // 'vue': 'vue/dist/vue.js',
+config.view = {
+  vue: {
+    ssr: true,
+    template: Utils.projectPath('public/index.html'),
+  }
 };
+
+config.aliases = {
+
+};
+
 
 config.vendor = [
   'vue',
@@ -30,8 +36,7 @@ config.styles = {
   app: [
     'app.scss'
   ],
-  vendor: [
-  ],
+  vendor: [],
 };
 
 // Attempt to use the URL "http://my-private-site.localtunnel.me"

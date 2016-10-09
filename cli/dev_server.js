@@ -1,6 +1,6 @@
 const Piping = require("piping");
 const Config = require('../config');
-const DevTools = require('../builder/dev');
+const DevTools = require('../bundler/dev');
 
 DevTools(function () {
 if (!Piping(

@@ -10,7 +10,7 @@ module.exports=function () {
 
   config.target = 'node';
 
-  config.entry = Config.get('client.entry_app');
+  config.entry = Config.get('client.entry');
 
   config.output = Object.assign({
     path: Config.get('client.dist_app'),
@@ -31,8 +31,8 @@ module.exports=function () {
     'browser-sync',
   ];
 
-  // Vue bug ??
-  config.plugins.push(new Webpack.IgnorePlugin(/vertx/));
+  // Vue bug
+  // config.plugins.push(new Webpack.IgnorePlugin(/vertx/));
 
   config.plugins.push(new Webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),

@@ -4,14 +4,12 @@ module.exports = plugins;
 
 // Webpack
 plugins.push({register: require('h2o2')});
-plugins.push({register: require('../builder/dev/hapi-middleware')});
+plugins.push({register: require('../bundler/dev/hapi-middleware')});
 
 // View Engine
 plugins.push({
   register: require('../view'),
-  options: {
-    template: 'public/index.html',
-  }
+  options: Config.get('client.view')
 });
 
 // Database
@@ -48,6 +46,5 @@ plugins.push({
 // Assets Handler
 plugins.push({
   register: require('../router/assets'),
-  options: {
-  }
+  options: {}
 });
