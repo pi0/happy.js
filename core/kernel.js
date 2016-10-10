@@ -1,6 +1,5 @@
 const Hapi = require('hapi');
 const Config = require('../config');
-const Colors = require('colors');
 const Utils = require('../utils');
 
 // Create new server

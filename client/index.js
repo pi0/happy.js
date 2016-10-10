@@ -2,28 +2,40 @@ import Vue from 'vue'
 import Router from './router';
 import Resource from './resource';
 import Store from './store';
+import {sync} from 'vuex-router-sync';
+import VueCookie from './plugins/vue-cookie';
 
 const inBrowser = typeof window !== 'undefined';
 
 function factory(options) {
-  var router = Router(options.router);
-  var resource = Resource(options.resource);
-  var store = Store(options.store);
 
-  var vue = Object.assign({router, resource, store}, options.app);
-  var app = new Vue(vue);
+  // Global Context
+  var context = {};
 
+  // Router
+  var router = context.router = Router(options.router);
+
+  // Store
+  var store = context.store = Store(options.store);
+
+  // Sync Router & Store
+  sync(store, router);
+
+  // Resource
+  var resource = context.resource = Resource(options.resource);
+
+  // Cookie Support
+  var cookie = context.cookie = VueCookie();
+
+  // Auth
+  var auth = context.auth = new options.Auth(context);
+
+  // Vue
+  var app = context.app = new Vue(Object.assign(context, options.App));
+
+  // App Entry
   const Entry = inBrowser ? require('./entry/client') : require('./entry/app');
-  var entry = Entry({app, router, store});
-
-  // Inject refs to entry
-  entry.options = options;
-  entry.router = router;
-  entry.resource = resource;
-  entry.store = store;
-  entry.app = app;
-
-  return entry;
+  return Entry({app, router, store});
 }
 
 export default factory;

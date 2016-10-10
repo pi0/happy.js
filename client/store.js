@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 module.exports = function (d) {
   return new Vuex.Store(Object.assign({
-    state: {},
-    token: null,
+    state: {
+      token: false,
+    },
   },d));
 };

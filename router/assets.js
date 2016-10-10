@@ -12,10 +12,11 @@ function register(server, options, next) {
     server.route({
       method: 'GET',
       path: '/assets/{q*}',
+      config: { auth: false },
       handler: {
         directory: {
           path: Config.get('client.assets'),
-          listing: true,
+          listing: false,//TODO isDev
           defaultExtension: 'html',
         }
       }

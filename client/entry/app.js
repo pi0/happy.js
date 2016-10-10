@@ -10,15 +10,9 @@ module.exports = function (args) {
 // Since data fetching is async, this function is expected to
 // return a Promise that resolves to the app instance.
 function init(context, app, router, store) {
-  // console.log('App Entry');
 
   // Set router's location
   router.push(context.url);
-
-  // Set Token
-  store.token = context.token;
-
-  //const s = isDev && Date.now();
 
   // Call preFetch hooks on components matched by the route.
   // A preFetch hook dispatches a store action and returns a Promise,
@@ -28,9 +22,6 @@ function init(context, app, router, store) {
       return component.preFetch(store)
     }
   })).then(() => {
-
-    //isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`);
-
     // After all preFetch hooks are resolved, our store is now
     // filled with the state needed to render the app.
     // Expose the state on the render context, and let the request handler
@@ -38,6 +29,13 @@ function init(context, app, router, store) {
     // store to pick-up the server-side state without having to duplicate
     // the initial data fetching on the client.
     context.initialState = store.state;
+
+    // Detect redirects
+    if (router.history.current && router.history.current.path != context.url) {
+      console.log('Redirect from '+context.url+' To '+router.history.current.path);
+      // context.url = router.history.current.path;
+      // context.redirect = true;
+    }
 
     return app
   })

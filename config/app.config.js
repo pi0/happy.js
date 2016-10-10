@@ -8,8 +8,15 @@ config.dirs = Config.has('app.dirs') ? Config.get('app.dirs') : ['app', 'config'
 
 config.entry = Utils.projectPath('app/index.js');
 config.src = Utils.projectPath('{' + config.dirs.join(',') + '}/**/*.js');
-config.controllers = Utils.projectPath('app/controllers');
+config.routes = Utils.projectPath('app/routes');
 config.dist = path.resolve(Utils.projectRoot, 'dist');
+config.jwt = {
+  secret: 'SOOOSECURE',
+  verify: {
+    algorithms: ['HS256']
+  },
+  ignoreExpiration: true,
+};
 
 config.babel = {
   "presets": [

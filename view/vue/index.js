@@ -6,6 +6,7 @@ const path = require('path');
 const Serialize = require('serialize-javascript');
 const Html = require('./html');
 const Renderer = require('./renderer');
+const Utils = require('../../utils');
 
 module.exports = function (options) {
 
@@ -16,7 +17,7 @@ module.exports = function (options) {
   var renderer = false;
   if (options.ssr) {
     Renderer(function (r) {
-      console.log('[SSR] [Vue] Renderer Loaded');
+      console.log('[SSR] Vue Renderer Loaded');
       renderer = r;
     });
   }
@@ -27,22 +28,28 @@ module.exports = function (options) {
     var req = request.raw.req;
     var res = request.raw.res;
 
-    if (!options.ssr) {
-      res.write(html.head);
-      res.write('<div id="app"></div>');
-      return res.end(html.tail);
+    var head_rendered = false;
+    var app_rendered = false;
+    var tail_rendered = false;
+
+    function graceful_end(message) {
+      if (message)
+        console.error('[SSR] ' + message);
+      if (!head_rendered)
+        res.write(html.head);
+      if (!app_rendered)
+        res.write('<div id="app"></div>');
+      if (!tail_rendered)
+        return res.end(html.tail);
     }
 
-    if (!renderer) {
-      console.error('[SSR] Vue is not available at the moment!');
-      res.write(html.head);
-      res.write('<div id="app"></div>');
-      return res.end(html.tail);
-    }
+    if (!options.ssr)
+      return graceful_end('Disabled by config');
 
-    // var s = Date.now();
+    if (!renderer)
+      return graceful_end('Still compiling...');
 
-    // Make rwquest context
+    // Make request context
     const context = {
       url: req.url,
       token: req.headers.authorization,
@@ -52,29 +59,39 @@ module.exports = function (options) {
     const renderStream = renderer.renderToStream(context);
     let firstChunk = true;
 
-    res.write(html.head);
-
     renderStream.on('data', chunk => {
       if (firstChunk) {
-        // embed initial store state
-        if (context.initialState) {
-          res.write(`<script>window.__INITIAL_STATE__=${Serialize(context.initialState, {isJSON: true})}</script>`)
+
+        // Check for redirects
+        if (context.redirect) {
+          renderStream.end();
+          return reply.redirect(context.url);
         }
+
+        res.write(html.head);
+
+        // embed initial store state
+        if (context.initialState)
+          res.write(`<script>window.___=${Serialize(context.initialState, {isJSON: true})}</script>`);
+
         firstChunk = false
       }
       res.write(chunk)
     });
 
     renderStream.on('end', () => {
-      res.end(html.tail);
-      // console.log(`whole request: ${Date.now() - s}ms`)
+      if (!context.redirect) {
+        res.end(html.tail);
+      }
     });
 
     renderStream.on('error', err => {
-      console.error('[SSR] Runtime Error! ' + err);
-      console.error(err);
-      res.write('<div id="app"></div>');
-      return res.end(html.tail);
+      err = err.stack
+        .replace(/webpack:\/\/\/\.\//g, Utils.projectPath('.') + '/')
+        .replace(/~/g, 'node_modules')
+        .replace(/\?/g, '');
+      console.error('> ' + err+"\r\n^^^^^^^^^^^^^^");
+      return graceful_end('Runtime Error!');
     });
 
   }

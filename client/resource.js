@@ -1,10 +1,7 @@
 import Vue from 'vue'
-
-const inBrowser = typeof window !== 'undefined';
-
-inBrowser && Vue.use(require('vue-resource'));
+import Resource from 'vue-resource';
 
 module.exports = function () {
-
+  Resource(Vue);
+  return Resource;
 };
-

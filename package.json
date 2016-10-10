@@ -18,6 +18,7 @@
   "keywords": [
     "vue",
     "hapi",
+    "happy",
     "happy.js",
     "node",
     "framework"
@@ -49,7 +50,7 @@
     "vue-hot-reload-api": "latest",
     "vue-html-loader": "latest",
     "vue-loader": "latest",
-    "vue-resource": "latest",
+    "vue-resource": "https://github.com/pi0/vue-resource/archive/master.tar.gz",
     "vue-router": "latest",
     "vue-style-loader": "latest",
     "vuex": "latest",
@@ -58,7 +59,7 @@
     "lru-cache": "latest",
     "memory-fs": "latest",
     "serialize-javascript": "latest",
-    "vuex-router-sync": "latest",
+    "vuex-router-sync": "next",
     "es6-promise": "latest",
     "vue-server-renderer": "latest",
     "vue-template-compiler": "latest",
@@ -75,10 +76,9 @@
     "babel-register": "latest",
     "babel-polyfill": "latest",
     "glob": "latest",
-    "hapi-auth-jwt2": "^7.1.3",
-    "joi": "latest"
-  },
-  "devDependencies": {
-    "Color": "latest"
+    "hapi-auth-jwt2": "latest",
+    "joi": "latest",
+    "Color": "latest",
+    "jsonwebtoken": "latest"
   }
 }

@@ -1,19 +1,26 @@
-const ClientDev = require('./client');
-const SSRDev = require('./ssr');
-const Colors = require('colors');
+var Child = require('child_process');
+var Path = require('path');
 
-module.exports = function (cb) {
-  var logPrefix = Colors.red("[DEV] ");
-
-  console.log(logPrefix + "Starting SSR Engine");
-  SSRDev(function () {
-
-    console.log(logPrefix + "Starting Client Bundler");
-    ClientDev(function () {
-
-      console.log(logPrefix + "Booting Application");
-      cb();
-
-    })
-  })
+module.exports.init = function () {
+  banner();
+  Child.fork(Path.resolve(__dirname,'./client.js'));
+  Child.fork(Path.resolve(__dirname,'./ssr.js'));
+  Child.fork(Path.resolve(__dirname,'./app.js'));
 };
+
+
+function banner() {
+  console.log(`
+--------------------------------------------------
+ _   _                            _     
+| | | | __ _ _ __  _ __  _   _   (_)___ 
+| |_| |/ _\` | \'_ \\| \'_ \\| | | |  | / __|
+|  _  | (_| | |_) | |_) | |_| |_ | \\__ \\
+|_| |_|\\__,_| .__/| .__/ \\__, (_)/ |___/
+            |_|   |_|    |___/ |__/
+--------------------------------------------------
+  `)
+}
+
+
+

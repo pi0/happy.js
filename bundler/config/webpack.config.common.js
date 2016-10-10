@@ -18,7 +18,7 @@ module.exports = function () {
   config.watchOptions = {
     aggregateTimeout: 3000,
     poll: 2000,
-    watchDelay:2000,
+    watchDelay: 2000,
   };
 
   config.output = {

@@ -1,19 +1,18 @@
 const Colors = require('colors');
+const Utils = require('../utils');
+
 const action = process.argv[2];
 
-var show_help = false;
-
-console.log(process.argv[1]);
-
 switch (action) {
+  case 'dev':
+    const Dev=require('../bundler/dev');
+    Dev.init();
+    break;
   case 'run':
-    require('./dev_server');
+    require('../utils/babel');
+    require(Utils.projectPath(process.argv[3]));
     break;
   default:
-    show_help = true;
+    console.log('Usage: '.yellow + process.argv[1] + ' ' + '[run|bundle]'.yellow);
     break;
-}
-
-if (show_help) {
-  console.log('Usage: '.yellow + process.argv[1] + ' ' + '[run|bundle]'.yellow)
 }

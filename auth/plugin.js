@@ -1,6 +1,8 @@
 function register(server, options, next) {
-  server.auth.strategy('jwt', 'jwt','optional', options);
+  // Register JWT Strategy
+  server.auth.strategy('jwt', 'jwt', 'optional', options);
   //server.auth.default('jwt');
+
   next();
 }
 
