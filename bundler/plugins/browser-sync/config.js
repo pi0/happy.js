@@ -1,4 +1,4 @@
-const Config = require('../../config');
+const Config = require('../../../config');
 
 module.exports = function () {
   return {
@@ -28,7 +28,7 @@ module.exports = function () {
 
     // proxy the Webpack Dev Server endpoint through BrowserSync
     proxy: {
-      target: 'http://localhost:'+Config.get('app.connection.port'),
+      target: 'http://localhost:' + Config.get('app.connection.port'),
       // serveStatic: [ClientConfig.public],
       ws: true,
     },

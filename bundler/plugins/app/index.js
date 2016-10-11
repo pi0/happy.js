@@ -1,7 +1,8 @@
 const Piping = require('piping');
 const Config = require('../../config');
+const Bus = require('../bus');
 
-console.log("[DEV] " + "Booting Application");
+Bus.log("Booting Application");
 
 var pipingConf = {
   main: Config.get('app.entry'),

@@ -1,5 +1,4 @@
-const path = require('path');
-const Config = require('../../config');
+const Config = require('../../../../config');
 
 module.exports = {
 
@@ -28,5 +27,4 @@ module.exports = {
     colors: true
   }
 
-}
-;
+};

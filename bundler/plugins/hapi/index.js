@@ -1,7 +1,5 @@
 exports.register = (server, options, next) => {
 
-  require('../ipc/client');
-
   server.route({
     method: 'GET',
     path: '/dist/{a*}',

@@ -79,6 +79,7 @@
     "hapi-auth-jwt2": "latest",
     "joi": "latest",
     "Color": "latest",
-    "jsonwebtoken": "latest"
+    "jsonwebtoken": "latest",
+    "extract-text-Webpack-plugin": "latest"
   }
 }

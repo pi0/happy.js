@@ -5,11 +5,10 @@ const action = process.argv[2];
 
 switch (action) {
   case 'dev':
-    const Dev=require('../bundler/dev');
-    Dev.init();
+    const Bundler = require('../bundler');
+    Bundler();
     break;
   case 'run':
-    require('../utils/babel');
     require(Utils.projectPath(process.argv[3]));
     break;
   default:
