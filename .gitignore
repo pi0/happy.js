@@ -30,6 +30,10 @@ build/Release
 node_modules
 jspm_packages
 
+#idea
+.idea
+*.iml
+
 # Optional npm cache directory
 .npm
 
