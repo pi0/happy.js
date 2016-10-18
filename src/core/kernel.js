@@ -10,7 +10,7 @@ Bus.name = 'app';
 require('../logger');
 
 // Create new server
-const server = new Hapi.Server(Config.get('happy'));
+const server = new Hapi.Server(Config.get('hapi'));
 module.exports = server;
 
 // Setup server connection

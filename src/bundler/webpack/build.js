@@ -1,5 +1,6 @@
 const ClientConfig = require('./config/client');
 const SSRConfig = require('./config/ssr');
+const ServerConfig = require('./config/server');
 const Bus = require('../../bus');
 const Webpack = require('webpack');
 
@@ -14,6 +15,7 @@ module.exports = function () {
   const compiler = Webpack([
     ClientConfig(),
     SSRConfig(),
+    ServerConfig(),
   ]);
 
   // Run once

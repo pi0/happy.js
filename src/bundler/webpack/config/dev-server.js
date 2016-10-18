@@ -44,7 +44,7 @@ module.exports = {
 
   // Public path to bind the middleware to use the same as in webpack
   // REQUIRED FOR MIDDLEWARE
-  publicPath: Config.get('dist').distPath,
+  publicPath: Config.get('dist.distPath'),
 
   port: 3001,
 

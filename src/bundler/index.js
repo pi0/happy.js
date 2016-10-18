@@ -14,8 +14,8 @@ Banner();
 
 module.exports.build = Build;
 
-var entry = Config.get('entry_app');
-var _app = null;
+var entry = Config.get('entry_server');
+var _server = null;
 var watch_lock = false;
 
 module.exports.dev = function dev() {
@@ -36,7 +36,7 @@ function loadplugin(plugin) {
 
 function watch() {
   var watch_dirs = [
-    Path.dirname(Config.get('entry_app'))
+    Path.dirname(Config.get('entry_server'))
   ];
   watch_dirs.forEach(dir=>FS.watch(Utils.projectPath(dir), reload));
 }
@@ -47,13 +47,13 @@ function reload(eventType, filename) {
   setTimeout(()=>watch_lock = false, 1000);
 
   if (filename && eventType)
-    Bus.message("Reloading app " + green(filename) + " " + eventType);
+    Bus.message("Reloading server " + green(filename) + " " + eventType);
   else
-    Bus.message("Starting app");
+    Bus.message("Starting server");
 
-  if (_app) _app.kill();
-  _app = Child.fork(entry);
+  if (_server) _server.kill();
+  _server = Child.fork(entry);
 
-  Bus.connect(_app);
+  Bus.connect(_server);
 }
 

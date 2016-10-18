@@ -123,10 +123,10 @@ module.exports = function (options) {
     }));
 
     // Minify with dead-code elimination
-    // config.plugins.push(new Webpack.optimize.UglifyJsPlugin({
-    //   compress: {warnings: false},
-    //   sourceMap: true
-    // }));
+    config.plugins.push(new Webpack.optimize.UglifyJsPlugin({
+      compress: {warnings: false},
+      sourceMap: true
+    }));
 
     // The UglifyJsPlugin will no longer put loaders into minimize mode, and the debug option has been deprecated.
     config.plugins.push(new Webpack.LoaderOptionsPlugin({

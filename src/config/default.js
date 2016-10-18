@@ -7,7 +7,7 @@ module.exports = function () {
     root: Utils.projectPath('.'),
 
     entry_client: Utils.projectPath('src/client/index.js'),
-    entry_app: Utils.projectPath('src/app/index.js'),
+    entry_server: Utils.projectPath('src/server/index.js'),
 
     public: Utils.projectPath('src/client/public'),
     assets: Utils.projectPath('src/client/public/assets'),
@@ -22,12 +22,12 @@ module.exports = function () {
       vendor_filename: 'client.vendor.js',
     },
 
-    dist_app: {
+    dist_server: {
       path: Utils.projectPath('dist'),
       filename: 'server.js',
     },
 
-    routes: Utils.projectPath('src/app/routes'),
+    routes: Utils.projectPath('src/server/routes'),
 
     view: {
       vue: {
@@ -62,7 +62,7 @@ module.exports = function () {
       port: 3000,
     },
 
-    happy: {
+    hapi: {
       debug: {
         log: ['error', 'info'],
         request: ['error']
