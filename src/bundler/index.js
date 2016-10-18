@@ -21,15 +21,25 @@ var watch_lock = false;
 module.exports.dev = function dev() {
 
   reload();
+  watch();
+
+  loadplugin('webpack/dev/ssr');
+  loadplugin('webpack/dev/client');
+  loadplugin('browser-sync');
+
+};
+
+function loadplugin(plugin) {
+  const child = Child.fork(Path.resolve(__dirname, plugin));
+  Bus.connect(child, plugin);
+}
+
+function watch() {
   var watch_dirs = [
     Path.dirname(Config.get('entry_app'))
   ];
-
   watch_dirs.forEach(dir=>FS.watch(Utils.projectPath(dir), reload));
-
-  const child = Child.fork(Path.resolve(__dirname, 'webpack/dev'));
-  Bus.connect(child, 'webpack');
-};
+}
 
 function reload(eventType, filename) {
   if (watch_lock)return;

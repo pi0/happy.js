@@ -20,13 +20,9 @@ module.exports = function () {
     filename: Config.get('dist').vendor_filename,
   }));
 
-  //
-  config.plugins.push(new Webpack.optimize.DedupePlugin());
-
   // Client output
   config.output = Object.assign({
     filename: Config.get('dist').filename,
-    publicPath: Config.get('dist').publicPath,
   }, config.output);
 
   // Config Vue style loader
@@ -45,9 +41,8 @@ module.exports = function () {
     config.plugins.push(new Webpack.HotModuleReplacementPlugin());
 
     // Push HMR Dependencies
-    // TODO : FIX BROWSER-SYNC MIDDLEWARE
-    // config.entry.vendor.push('webpack-dev-server/client?/');
-    // config.entry.vendor.push('webpack/hot/dev-server');
+    config.entry.vendor.push('webpack-dev-server/client?http://0.0.0.0:3001');
+    config.entry.vendor.push('webpack/hot/dev-server');
 
   } else { // Production Config
 
@@ -55,11 +50,11 @@ module.exports = function () {
     //const ExtractTextPlugin = require('extract-text-webpack-plugin');
     //config.plugins.push(new ExtractTextPlugin('styles.css'));
 
-    // Minify with dead-code elimination
-    // config.plugins.push(new Webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}));
-
     // NoErrors
     config.plugins.push(new Webpack.NoErrorsPlugin());
+
+    //
+    config.plugins.push(new Webpack.optimize.DedupePlugin());
 
   }
 

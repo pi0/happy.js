@@ -1,10 +1,10 @@
-const Config = require('../../../config');
+const Config = require('../../config');
 
 module.exports = function () {
   return {
 
     // Browser Sync Listening Port
-    port: 3000,
+    port: 3002,
 
     // Reload Delay
     // reloadDelay: 5000,
@@ -20,7 +20,7 @@ module.exports = function () {
 
     // proxy the Webpack Dev Server endpoint through BrowserSync
     proxy: {
-      target: 'http://localhost:' + Config.get('connection.port'),
+      target: 'http://localhost:' + 3001,
       ws: true,
     },
 
@@ -36,6 +36,7 @@ module.exports = function () {
       'public/**/*.css',
     ],
 
-  };
+  }
+    ;
 
 };

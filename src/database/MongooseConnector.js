@@ -1,11 +1,12 @@
 // FIX Driver path
 const Path = require('path');
 const Utils = require('../utils');
-console.log("Fixing driver path");
-global.MONGOOSE_DRIVER_PATH = 'mongoose/lib/drivers/node-mongodb-native';
+
+// console.log("Fixing driver path");
+// global.MONGOOSE_DRIVER_PATH = 'mongoose/lib/drivers/node-mongodb-native';
 // require(global.MONGOOSE_DRIVER_PATH);
-require('mongoose/lib/drivers/node-mongodb-native');
-console.log(global.MONGOOSE_DRIVER_PATH);
+// require('mongoose/lib/drivers/node-mongodb-native');
+// console.log(global.MONGOOSE_DRIVER_PATH);
 
 // Based on https://github.com/asilluron/hapi-mongoose/blob/master/lib/MongooseConnector.js
 const mongoose = require('mongoose');

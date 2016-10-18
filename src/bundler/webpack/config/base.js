@@ -14,6 +14,10 @@ module.exports = function (options) {
   config.resolve = {
     extensions: ['.js', '.vue'],
     alias: Config.get('aliases'),
+    modules: [
+      Path.resolve(Utils.projectRoot, "node_modules"),
+      Path.resolve(Utils.libRoot, "../node_modules"),
+    ]
   };
 
   config.resolveLoader = {
@@ -24,9 +28,10 @@ module.exports = function (options) {
   };
 
 
-// Basic output config
+  // Basic output config
   config.output = {
     path: Config.get('dist').path,
+    publicPath: '/dist/',
     jsonpFunction: '_jsp', // Change WebpackJsonp function
   };
 
@@ -49,7 +54,7 @@ module.exports = function (options) {
         test: /\.js$/,
         loader: 'babel',
         // important: exclude files in node_modules, otherwise it's going to be really slow!
-        exclude: /node_modules|vendor/
+        exclude: /node_modules|dist/
       },
       // JSON
       {
@@ -115,9 +120,14 @@ module.exports = function (options) {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
     }));
 
-    // This is needed in Webpack 2 for minifying CSS
-    config.plugins.push(new Webpack.LoaderOptionsPlugin({minimize: true}));
+    // Minify with dead-code elimination
+    config.plugins.push(new Webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}));
 
+    // The UglifyJsPlugin will no longer put loaders into minimize mode, and the debug option has been deprecated.
+    config.plugins.push(new Webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false,
+    }));
   }
 
   return config;

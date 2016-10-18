@@ -18,7 +18,7 @@ module.exports = function () {
       distPath: '/dist/',
       filename: 'client.js',
       filename_ssr: 'client.ssr.js',
-      publicPath: '/public',
+      publicPath: 'public/',
       vendor_filename: 'client.vendor.js',
     },
 
@@ -59,7 +59,7 @@ module.exports = function () {
 
     // Hapi Listening config
     connection: {
-      port: 3001
+      port: 3000,
     },
 
 

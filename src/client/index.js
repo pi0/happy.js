@@ -5,9 +5,8 @@ import Store from './plugins/store';
 import {sync} from 'vuex-router-sync';
 import VueCookie from './plugins/cookie';
 
-// TODO: Better check ?!
 const inBrowser = typeof window !== 'undefined';
-console.log("ARRRR");
+
 function factory(options) {
 
   // Global Context
