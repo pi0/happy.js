@@ -7,7 +7,7 @@ var Bus = require('../bus');
 const Utils = require('../utils');
 const Build = require('./webpack/build');
 
-require('./logger');
+require('../logger');
 Bus.name = "bundler";
 
 Banner();

@@ -16,13 +16,14 @@ function createRenderer(bundle) {
 
 module.exports = function (cb) {
 
+  let bundle_name = Config.get('dist').filename_ssr;
+
   if (Utils.isProd()) {
     // Create server renderer from real fs
-    const bundlePath = Utils.projectPath('dist/main.js');
+    const bundlePath = Utils.projectPath('dist/' + bundle_name);
     var renderer = createRenderer(FS.readFileSync(bundlePath, 'utf-8'));
     cb(renderer);
   } else {
-    let bundle_name = Config.get('dist').filename_ssr;
     // Subscribe for bundle
     Bus.subscribe('bundle:' + bundle_name, (m)=> {
       let {name, source, size}=m;

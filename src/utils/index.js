@@ -2,7 +2,7 @@ const Path = require('path');
 var windows = process.platform.indexOf("win") === 0;
 
 // Project Root
-//const projectRoot = Path.dirname(Path.resolve(__dirname).split('happy.js')[0]);
+// const projectRoot = Path.dirname(Path.resolve(__dirname).split('happy.js')[0]);
 const projectRoot = process.cwd();
 module.exports.projectRoot = projectRoot;
 

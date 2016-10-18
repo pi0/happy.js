@@ -1,6 +1,5 @@
 const ClientConfig = require('./config/client');
 const SSRConfig = require('./config/ssr');
-const AppConfig = require('./config/app');
 const Bus = require('../../bus');
 const Webpack = require('webpack');
 
@@ -15,7 +14,6 @@ module.exports = function () {
   const compiler = Webpack([
     ClientConfig(),
     SSRConfig(),
-    // AppConfig(),
   ]);
 
   // Run once
@@ -23,6 +21,7 @@ module.exports = function () {
     Bus.message(err);
     Bus.message(stats);
     Bus.message('Done!');
+    process.exit();
   });
 
 };

@@ -1,7 +1,7 @@
 const Config = require('../config');
 const H2O2 = require('h2o2');
 const View = require('../view');
-const MongooseConnector = require('../database/MongooseConnector');
+const Database = require('../database');
 const JWT2 = require('hapi-auth-jwt2');
 const Auth = require('../auth/plugin');
 
@@ -20,7 +20,7 @@ plugins.push({
 // Database
 if (Config.get('database.mongodb.uri')) {
   plugins.push({
-    register: MongooseConnector,
+    register: Database,
     options: {
       uri: Config.get('database.mongodb.uri'),
       options: Config.get('database.mongodb.options'),

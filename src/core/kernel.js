@@ -6,8 +6,11 @@ const Utils = require('../utils');
 const Bus = require('../bus');
 Bus.name = 'app';
 
+// Enable logging
+require('../logger');
+
 // Create new server
-const server = new Hapi.Server();
+const server = new Hapi.Server(Config.get('happy'));
 module.exports = server;
 
 // Setup server connection

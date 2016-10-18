@@ -10,19 +10,19 @@ const _Config = require('config');
 
 // Get
 module.exports.get = function get(key) {
-  return _Config.get('happier.' + key)
+  return _Config.get('happy.' + key)
 };
 
 // Has
 module.exports.has = function has(key) {
-  return _Config.has('happier.' + key)
+  return _Config.has('happy.' + key)
 };
 
 
 const settings = require('./default')();
 
 // Load missing user configs
-var userConfigs = _Config.has('happier') ? _Config.get('happier') : {};
+var userConfigs = _Config.has('happy') ? _Config.get('happy') : {};
 _Config.util.extendDeep(settings, userConfigs);
 
-_Config.util.setModuleDefaults('happier', settings);
+_Config.util.setModuleDefaults('happy', settings);

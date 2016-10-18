@@ -22,6 +22,19 @@ function register(server, options, next) {
       }
     });
 
+    server.route({
+      method: 'GET',
+      path: '/dist/{q*}',
+      config: {auth: false},
+      handler: {
+        directory: {
+          path: Config.get('dist.path'),
+          listing: false,
+          defaultExtension: 'html',
+        }
+      }
+    });
+
     next();
 
   });

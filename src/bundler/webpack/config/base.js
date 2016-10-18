@@ -27,15 +27,14 @@ module.exports = function (options) {
     ]
   };
 
-
   // Basic output config
   config.output = {
-    path: Config.get('dist').path,
+    path: Config.get('dist.path'),
     publicPath: '/dist/',
-    jsonpFunction: '_jsp', // Change WebpackJsonp function
+    jsonpFunction: '_jsp_', // Change Webpack jsonp function
   };
 
-// Config Module Loaders
+  // Config Module Loaders
   config.module = {
 
     loaders: [
@@ -105,14 +104,17 @@ module.exports = function (options) {
       watchDelay: 2000,
     };
 
-    // Eval source maps are so fast and also available inside bundles :)
-    config.devtool = '#eval';
+    // Eval source maps are so fast
+    config.devtool = '#cheap-module-eval-source-map';
 
     // Bus Plugin
     const BusPlugin = require('../webpack-bus-plugin');
     config.plugins.push(new BusPlugin({name: options.name}));
 
   } else { // Production Config
+
+    // Source maps
+    config.devtool = '#souece-map';
 
     // Pass build environment inside bundle
     // This will Strip comments in Vue code & hort-circuits all Vue.js warning code
@@ -121,7 +123,10 @@ module.exports = function (options) {
     }));
 
     // Minify with dead-code elimination
-    config.plugins.push(new Webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}));
+    // config.plugins.push(new Webpack.optimize.UglifyJsPlugin({
+    //   compress: {warnings: false},
+    //   sourceMap: true
+    // }));
 
     // The UglifyJsPlugin will no longer put loaders into minimize mode, and the debug option has been deprecated.
     config.plugins.push(new Webpack.LoaderOptionsPlugin({

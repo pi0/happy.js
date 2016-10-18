@@ -7,6 +7,7 @@ module.exports = function (d) {
   return new Vuex.Store(Object.assign({
     state: {
       token: false,
+      route: {},
     },
   }, d));
 };

@@ -5,12 +5,13 @@ module.exports = function (args) {
   if (typeof window.___ !== "undefined")
     args.store.replaceState(window.___);
   else {
-    // Fallback support
-    args.store.replaceState({
-      state: {
-        route: {}
-      }
-    })
+    // TODO: Extract ME From URL
+    // // Fallback support
+    // args.store.replaceState({
+    //   state: {
+    //     route: {}
+    //   }
+    // })
   }
 
   // actually mount to DOM

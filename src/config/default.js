@@ -62,10 +62,15 @@ module.exports = function () {
       port: 3000,
     },
 
+    happy: {
+      debug: {
+        log: ['error', 'info'],
+        request: ['error']
+      }
+    },
 
     // Webpack aliases config
-    aliases: {
-    },
+    aliases: {},
 
     vendor: [
       'vue',
