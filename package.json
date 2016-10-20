@@ -23,7 +23,6 @@
     "node",
     "framework"
   ],
-  "main": "src/core/kernel.js",
   "devDependencies": {
     "babel-core": "6.17.0",
     "babel-loader": "latest",
