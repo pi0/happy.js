@@ -1,7 +1,7 @@
 const path = require('path');
 const glob = require('glob');
 const Joi = require('joi');
-require('babel-polyfill');
+require('../../../../utils/colors');
 
 class AutoRouter {
   // Based on WURST By Felix Heck <hi@whoTheHeck.de>
@@ -10,19 +10,24 @@ class AutoRouter {
   constructor(server, options) {
     this.server = server;
     this.options = options ? options : {};
+    this.routeList = [];
 
     this.validateOptions();
+
     this.getFilePaths().forEach(this.registerRoutes.bind(this));
-    this.options.log && this.logRouteList();
+
+    this.logRouteList();
   }
 
   // Load and register routes
   registerRoutes(filePath) {
     const modulePath = path.join(this.options.routes, filePath);
     const routes = require(modulePath);
+
     const prefixedRoutes = this.prefixRoutes(routes, filePath);
     if (!prefixedRoutes || !prefixedRoutes.length || !prefixedRoutes[0].path) return; // Ignore empty routes
     this.server.route(prefixedRoutes);
+
     delete require.cache[modulePath];
   };
 
@@ -57,10 +62,21 @@ class AutoRouter {
 
   // Log the built list of prefixed routes into console
   logRouteList() {
-    console.info(`Routes:`);
+    var colorify = method=> {
+      switch (method) {
+        case 'GET':
+          return green(method);
+        case 'POST':
+          return red(method);
+        default:
+          return magenta(method);
+      }
+    };
+    console.info(grey(`-------------Routes---------------`));
     this.routeList.forEach(route => {
-      console.info('\t', `[${route.method}]`.padEnd(8), route.path);
+      console.info(`${'        ['+colorify(route.method)}]`.slice(-16), route.path);
     });
+    console.info(grey(`----------------------------------`));
   };
 
   // Validate plugin options based on defined schema
@@ -69,7 +85,6 @@ class AutoRouter {
   };
 
 }
-;
 
 // Route Objects Basic validator
 const schemata = {
@@ -101,8 +116,10 @@ function getPathTree(filePath) {
 }
 
 
-function register(server, options) {
-  return new AutoRouter(server, options);
+function register(server, options,next) {
+  let r= new AutoRouter(server, options);
+  next();
+  return r;
 }
 
 register.attributes = {

@@ -1,7 +1,8 @@
 module.exports = function validateFuncFactory(server, options) {
 
   var validateFunc = function (decoded, request, callback) {
-    console.log('Skipping validation...');
+    if (options.validator)
+      return options.validator(decoded, request, callback);
     return callback(null, true);
   };
 

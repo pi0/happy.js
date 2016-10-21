@@ -102,7 +102,7 @@ module.exports = function (options) {
     };
 
     // Eval source maps are so fast
-    config.devtool = '#cheap-module-eval-source-map';
+    config.devtool = '#eval';
 
     // Bus Plugin
     const BusPlugin = require('../webpack-bus-plugin');

@@ -15,14 +15,14 @@ module.exports = function () {
   const compiler = Webpack([
     ClientConfig(),
     SSRConfig(),
-    ServerConfig(),
+    // ServerConfig(),
   ]);
 
   // Run once
   compiler.run((err, stats)=> {
-    Bus.message(err);
+    // Bus.message(err);
     Bus.message(stats);
-    Bus.message('Done!');
+    // Bus.message('Done!');
     process.exit();
   });
 

@@ -1,11 +1,13 @@
-const VueHandler = require('./vue/handler');
+const VueHandler = require('../../view/vue/handler');
 
 function register(server, options, next) {
+
+  var handler = VueHandler(options.vue);
 
   server.route({
     method: 'GET',
     path: '/{any*}',
-    handler: VueHandler(options.vue),
+    handler,
   });
 
   next();

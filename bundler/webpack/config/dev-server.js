@@ -4,7 +4,8 @@ module.exports = {
 
   // Set this as true if you want to access dev server from arbitrary url.
   // This is handy if you are using a html5 router.
-  historyApiFallback: true,
+  // historyApiFallback: true,
+
 
   // Control the console log messages shown in the browser when using inline module.
   // Can be `error`, `warning`, `info` or `none`.

@@ -16,7 +16,6 @@ Bus.subscribe('bundle::request', name=> {
     subscribed_bundles.push(name);
   let sent = sendBundle(name);
   if (!sent) {
-    Bus.message("Building bundle " + name + " ....");
     // TODO : queue
   }
 });
@@ -31,7 +30,6 @@ compiler.watch({}, (err, stat) => {
     let source = assets[name]._cachedSource;
     let size = assets[name]._cachedSize;
     bundles[name] = {name, source, size};
-    Bus.message('Bundle ' + green(name) + grey(' (Size: ' + (parseInt(size * 1.0 / 10.24) * 100) + 'KB)'));
     if (subscribed_bundles.indexOf(name) !== -1)
       sendBundle(name);
   });
@@ -40,7 +38,7 @@ compiler.watch({}, (err, stat) => {
 function sendBundle(name) {
   let bundle = bundles[name];
   if (!bundle) return;
-  Bus.message('Sending bundle ' + green(name) + grey(' (Size: ' + (parseInt(bundle.size * 1.0 / 10.24) * 100) + 'KB)'));
+  Bus.message('Send ' + green(bundle.name) + grey(' (Size: ' + parseInt(bundle.size / 1024.0) + 'KB)'));
   Bus.emit('bundle:' + name, bundle);
 }
 

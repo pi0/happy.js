@@ -27,6 +27,12 @@ module.exports.dev = function dev() {
   loadplugin('webpack/dev/client');
   loadplugin('browser-sync');
 
+  var stdin = process.stdin;
+  stdin.resume();
+  stdin.on( 'data', function( key ){
+    reload();
+  });
+
 };
 
 function loadplugin(plugin) {
@@ -38,7 +44,10 @@ function watch() {
   var watch_dirs = [
     Path.dirname(Config.get('entry_server'))
   ];
-  watch_dirs.forEach(dir=>FS.watch(Utils.projectPath(dir), reload));
+  // Bus.message('Watching for server reloading: '+watch_dirs);
+  watch_dirs.forEach(dir=>FS.watch(Utils.projectPath(dir),{
+    recursive:true,
+  }, reload));
 }
 
 function reload(eventType, filename) {

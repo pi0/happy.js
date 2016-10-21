@@ -1,11 +1,9 @@
-const Validator= require('./validator');
+const Validator = require('./validator');
 
 function register(server, options, next) {
 
   // Setup ValidateFunc
-  if (!options.validateFunc) {
-    options.validateFunc = Validator(server, options);
-  }
+  options.validateFunc = Validator(server, options);
 
   // Register JWT Strategy
   server.auth.strategy('jwt', 'jwt', 'optional', options);

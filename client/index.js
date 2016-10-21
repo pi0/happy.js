@@ -1,5 +1,4 @@
 import Vue from 'vue'
-
 const inBrowser = typeof window !== 'undefined';
 
 function factory(options) {
@@ -13,10 +12,15 @@ function factory(options) {
   });
 
   // Vue
-  context.app = new Vue(Object.assign(context, options.app));
+  context.app = new Vue(context);
+
+  Object.keys(context).forEach(function (k) {
+    context.app[k] = context[k];
+  });
 
   // App Entry
   const Entry = inBrowser ? require('./entry/client') : require('./entry/app');
+  Entry.context = context;
 
   return Entry(context);
 }

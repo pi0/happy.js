@@ -1,51 +1,50 @@
 const Config = require('../../config');
-const H2O2 = require('h2o2');
 
-const ViewPlugin = require('./view');
+const H2O2 = require('h2o2');
 const DatabasePlugin = require('./database');
 const JWT2Plugin = require('hapi-auth-jwt2');
 const AuthPlugin = require('./auth');
 const RouterPlugin = require('./router');
 
-const plugins = module.exports = [];
+module.exports = function (options) {
+  const plugins = [];
 
-// H2O2 Proxy
-plugins.push({register: H2O2});
+  // H2O2 Proxy
+  plugins.push({register: H2O2});
 
-// View Engine
-plugins.push({
-  register: ViewPlugin,
-  options: Config.get('view')
-});
+  // Database
+  if (Config.has('database.mongodb.uri')) {
+    plugins.push({
+      register: DatabasePlugin,
+      options: {
+        uri: Config.get('database.mongodb.uri'),
+        options: Config.get('database.mongodb.options'),
+      }
+    });
+  }
 
-// Database
-if (Config.has('database.mongodb.uri')) {
+  // Auth
+  plugins.push({register: JWT2Plugin});
   plugins.push({
-    register: DatabasePlugin,
+    register: AuthPlugin,
     options: {
-      uri: Config.get('database.mongodb.uri'),
-      options: Config.get('database.mongodb.options'),
+      key: Config.get('jwt.secret'),
+      verifyOptions: Config.get('jwt.verify'),
+      ignoreExpiration: Config.get('jwt.ignoreExpiration'),
+      validator: options.auth.validator
+    },
+  });
+
+  // Router
+  plugins.push({
+    register: RouterPlugin,
+    options: {
+      routes: Config.get('routes'),
+      include: '**/*.js',
+      log: false,
+      view: Config.get('view'),
     }
   });
-}
 
-// Auth
-plugins.push({register: JWT2Plugin});
-plugins.push({
-  register: AuthPlugin,
-  options: {
-    key: Config.get('jwt.secret'),
-    verifyOptions: Config.get('jwt.verify'),
-    ignoreExpiration: Config.get('jwt.ignoreExpiration'),
-  },
-});
-
-// Router
-plugins.push({
-  register: RouterPlugin,
-  options: {
-    routes: Config.get('routes'),
-    include: '**/*.js',
-    log: false,
-  }
-});
+  return plugins;
+};

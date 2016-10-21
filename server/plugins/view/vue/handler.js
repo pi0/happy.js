@@ -7,6 +7,7 @@ const Serialize = require('serialize-javascript');
 const Html = require('./html');
 const Renderer = require('./renderer');
 const Utils = require('../../../../utils');
+const Bus = require('../../../../bus');
 
 module.exports = function (options) {
 
@@ -17,7 +18,7 @@ module.exports = function (options) {
   var renderer = false;
   if (options.ssr) {
     Renderer(function (r) {
-      console.log('[SSR] Vue Renderer Loaded');
+      Bus.message('Vue Handler Ready');
       renderer = r;
     });
   }
@@ -38,7 +39,7 @@ module.exports = function (options) {
       if (!head_rendered)
         res.write(html.head);
       if (!app_rendered)
-        res.write('<div id="app"></div>');
+        res.write('<div id="app"></div><script>window.___={state:{route:{path:""}}}</script>');
       if (!tail_rendered)
         return res.end(html.tail);
     }
@@ -52,7 +53,8 @@ module.exports = function (options) {
     // Make request context
     const context = {
       url: req.url,
-      token: req.headers.authorization,
+      redirect: false,
+      cookies: request.state,
       initialState: {},
     };
 

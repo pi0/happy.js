@@ -7,6 +7,11 @@ export default class ResourcePlugin extends BasePlugin {
 
   init() {
     VueResource(Vue);
+    Vue.http.options = this.options;
+  }
+
+  provider() {
+    return Vue.http;
   }
 
 };

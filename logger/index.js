@@ -14,6 +14,6 @@ Bus.subscribe('message', function (m) {
   log(m.tag, m.message, 'blue');
 });
 
-Bus.subscribe('webpack::notify', function (m) {
-  log(['webpack', m.name], m.action, 'grey');
-});
+// Bus.subscribe('webpack::notify', function (m) {
+//   log(['webpack', m.name], m.action, 'grey');
+// });

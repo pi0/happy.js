@@ -10,15 +10,18 @@ export default class StorePlugin extends BasePlugin {
 
     var state = {
       state: {
-        token: false,
+        token: null,
         route: {},
+        user: null,
       },
     };
 
-    this.store = new Vuex.Store(Object.assign(state, this.options.state));
+    this.store = new Vuex.Store({
+      state: Object.assign(state, this.options.state),
+    });
   }
 
-  provider(){
+  provider() {
     return this.store;
   }
 

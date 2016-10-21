@@ -6,6 +6,8 @@ module.exports = function () {
     // Browser Sync Listening Port
     port: 3002,
 
+    logLevel: "silent",
+
     // Reload Delay
     // reloadDelay: 5000,
 

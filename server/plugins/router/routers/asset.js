@@ -1,7 +1,8 @@
 const Inert = require('inert');
 const Config = require('../../../../config');
 
-function register(server, options) {
+
+function register(server, options,next) {
 
   server.register(Inert, (err) => {
     if (err) throw err;
@@ -32,6 +33,7 @@ function register(server, options) {
       }
     });
 
+    next();
   });
 
 }

@@ -7,7 +7,6 @@ var init = false;
 
 function notify(msg) {
   browserSync.notify(msg);
-  Bus.message(msg);
 }
 
 var config = Object.assign({}, BrowserSyncConfig());
@@ -25,7 +24,7 @@ Bus.subscribe('webpack::notify', m => {
       notify('Rebuilding...');
       break;
     case 'done':
-      notify('Done');
+      notify('Build done');
       break;
     default:
   }

@@ -1,15 +1,28 @@
-var AutoRouter = require('./routers/auto');
-var AssetRouter = require('./routers/asset');
+const AutoRouter = require('./routers/auto');
+const AssetRouter = require('./routers/asset');
+const ViewRouter = require('./routers/view');
 
 function register(server, options, next) {
 
-  var routers = [AutoRouter, AssetRouter];
+  var routers = [
+    {
+      register: AutoRouter,
+      options: {
+        routes: options.routes,
+      }
+    },
+    {
+      register: AssetRouter,
+    },
+  ];
 
-  routers.forEach(function (router) {
-    server.register(router);
+  server.register(routers, ()=> {
+    server.register({
+      register: ViewRouter,
+      options: options.view,
+    }, next);
   });
 
-  next();
 }
 
 register.attributes = {

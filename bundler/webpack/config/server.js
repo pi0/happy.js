@@ -38,12 +38,6 @@ module.exports = function (options) {
     'vertx',
   ];
 
-  config.resolveLoader = {
-    modules: [
-      Path.resolve(Utils.projectRoot, "node_modules"),
-      Path.resolve(Utils.libRoot, "../node_modules"),
-    ]
-  };
 
   return config;
 };
