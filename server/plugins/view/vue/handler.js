@@ -39,7 +39,7 @@ module.exports = function (options) {
       if (!head_rendered)
         res.write(html.head);
       if (!app_rendered)
-        res.write('<div id="app"></div><script>window.___={state:{route:{path:""}}}</script>');
+        res.write('');
       if (!tail_rendered)
         return res.end(html.tail);
     }
@@ -89,7 +89,7 @@ module.exports = function (options) {
 
     renderStream.on('error', err => {
       console.log('Runtime Error!');
-      return graceful_end(err.stack);
+      return graceful_end(err);
     });
 
   }

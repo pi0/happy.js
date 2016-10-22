@@ -11,7 +11,12 @@ function init(runtime_context, client_context) {
   // Call preFetch hooks on components matched by the route.
   // A preFetch hook dispatches a store action and returns a Promise,
   // which is resolved when the action is complete and store state has been updated.
-  return Promise.all(router.getMatchedComponents().map(component => {
+  var prefetch = [
+    ...router.getMatchedComponents(),
+    client_context.auth,
+  ];
+
+  return Promise.all(prefetch.map(component => {
     if (component.preFetch) {
       return component.preFetch(store)
     }

@@ -10,9 +10,6 @@ export default class StorePlugin extends BasePlugin {
 
     var state = {
       state: {
-        token: null,
-        route: {},
-        user: null,
       },
     };
 

@@ -1,7 +1,7 @@
 import BasePlugin from '../base';
 
 export const SET_USER = 'auth/SET_USER';
-
+export const LOAD_USER = 'auth/LOAD_USER';
 
 export default class AuthPlugin extends BasePlugin {
 
@@ -17,25 +17,48 @@ export default class AuthPlugin extends BasePlugin {
     // Register Auth module on store
     this.context.store.registerModule('auth', {
       state: {
-        token: null,
-        user: null,
+        user: {
+          name: '',
+        },
+      },
+      actions: {
+        [LOAD_USER]({commit}){
+          self.context.resource.get('auth/profile').then(res=> {
+            if (res.body.user) {
+              commit(SET_USER, {user: res.body.user});
+            }
+          });
+        }
       },
       mutations: {
         [SET_USER](state, payload){
           state.user = payload.user
         }
-      }
+      },
     });
-
 
   }
 
-  login(credentials,cb) {
+  preFetch() {
+    var self = this;
+    return new Promise(function (resolve, reject) {
+      self.context.resource.get('auth/profile')
+        .then(res=> {
+          if (res.body.user)
+            self.context.store.commit(SET_USER, {user: res.body.user});
+          resolve();
+        })
+        .catch((err)=> {
+          resolve(); // preFetch is not mondatory!
+        });
+    });
+  }
+
+  login(credentials, cb) {
     this.context.resource.post('auth/login', credentials).then(response=> {
       if (response.body.token) {
         this.context.cookie.set('token', response.body.token);
-        this.context.store.commit(SET_USER, {user: response.body.user});
-        this.context.router.replace({name:'dashboard.dashboard'});
+        this.context.router.replace('/');
       }
       cb(response.body);
     });
