@@ -12,24 +12,23 @@ const _Config = require('config');
 
 // Get
 module.exports.get = function get(key) {
-  return _Config.get('happy.' + key)
+  return _Config.get('happy.'+key)
 };
 
-// Get
+// getClone
 module.exports.getClone = function getClone(key) {
   return Utils.deepClone(module.exports.get(key));
 };
 
 // Has
 module.exports.has = function has(key) {
-  return _Config.has('happy.' + key)
+  return _Config.has('happy.'+key)
 };
 
 
 const settings = require('./default')();
 
 // Load missing user configs
-var userConfigs = _Config.has('happy') ? _Config.get('happy') : {};
-_Config.util.extendDeep(settings, userConfigs);
+_Config.util.extendDeep(settings, _Config);
 
 _Config.util.setModuleDefaults('happy', settings);

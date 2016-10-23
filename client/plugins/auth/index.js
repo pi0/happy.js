@@ -1,7 +1,6 @@
 import BasePlugin from '../base';
 
 export const SET_USER = 'auth/SET_USER';
-export const LOAD_USER = 'auth/LOAD_USER';
 
 export default class AuthPlugin extends BasePlugin {
 
@@ -21,15 +20,6 @@ export default class AuthPlugin extends BasePlugin {
           name: '',
         },
       },
-      actions: {
-        [LOAD_USER]({commit}){
-          self.context.resource.get('auth/profile').then(res=> {
-            if (res.body.user) {
-              commit(SET_USER, {user: res.body.user});
-            }
-          });
-        }
-      },
       mutations: {
         [SET_USER](state, payload){
           state.user = payload.user
@@ -37,27 +27,32 @@ export default class AuthPlugin extends BasePlugin {
       },
     });
 
+    this.preFetch();
   }
 
   preFetch() {
-    var self = this;
-    return new Promise(function (resolve, reject) {
-      self.context.resource.get('auth/profile')
-        .then(res=> {
-          if (res.body.user)
-            self.context.store.commit(SET_USER, {user: res.body.user});
+    if (!this.preFetchObj) {
+      this.preFetchObj = new Promise((resolve, reject)=> {
+        this.context.resource.get('auth/profile').then(res=> {
+          if (res.body && res.body.user)
+            this.context.store.commit(SET_USER, {user: res.body.user});
           resolve();
-        })
-        .catch((err)=> {
+          delete this.preFetchObj;
+        }).catch((err)=> {
+          console.log(err);
           resolve(); // preFetch is not mondatory!
+          delete this.preFetchObj;
         });
-    });
+      });
+    }
+    return this.preFetchObj;
   }
 
   login(credentials, cb) {
     this.context.resource.post('auth/login', credentials).then(response=> {
       if (response.body.token) {
         this.context.cookie.set('token', response.body.token);
+        this.preFetch();
         this.context.router.replace('/');
       }
       cb(response.body);
