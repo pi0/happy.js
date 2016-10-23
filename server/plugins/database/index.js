@@ -1,15 +1,9 @@
-const MongooseConnector = require('./MongooseConnector');
+const Mongoose = require('mongoose');
+require('./mongoose');
 
-exports.register = (server, options, next) => {
-  let connector = new MongooseConnector(options, server);
-
-  connector.on('ready', () => {
-    server.expose('mongoose', connector.mongoose);
-    server.expose('mongo', connector.connection);
-    next();
-  });
-
-  connector.on('error', err => next(err));
+exports.register = (server, config, next) => {
+  Mongoose.connect(config.uri, config.options);
+  next();
 };
 
 exports.register.attributes = {

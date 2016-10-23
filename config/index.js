@@ -1,3 +1,5 @@
+const Utils = require('../utils');
+
 // https://github.com/lorenwest/node-config/wiki/Sub-Module-Configuration
 
 // Applications don't get No config files warnings if they aren't using node-config.
@@ -11,6 +13,11 @@ const _Config = require('config');
 // Get
 module.exports.get = function get(key) {
   return _Config.get('happy.' + key)
+};
+
+// Get
+module.exports.getClone = function getClone(key) {
+  return Utils.deepClone(module.exports.get(key));
 };
 
 // Has
