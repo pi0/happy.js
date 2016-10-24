@@ -8,6 +8,7 @@ const Html = require('./html');
 const Renderer = require('./renderer');
 const Utils = require('../../../../utils');
 const Bus = require('../../../../bus');
+const Config = require('../../../../config');
 
 module.exports = function (options) {
 
@@ -53,6 +54,7 @@ module.exports = function (options) {
     // Make request context
     const context = {
       url: req.url,
+      base_url: Config.get('base_url'),
       redirect: false,
       cookies: request.state,
       initialState: {},

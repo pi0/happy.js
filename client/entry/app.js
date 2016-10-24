@@ -1,9 +1,12 @@
 function init(runtime_context, client_context) {
 
-  var {app, router, store}=client_context;
+  var {app, router, store, resource}=client_context;
 
   // Link client virtual cookies with runtime
   client_context.cookies = runtime_context.cookies;
+
+  //
+  resource.options.root = runtime_context.base_url + resource.options.root;
 
   // Set router's location
   router.push(runtime_context.url);
