@@ -951,11 +951,15 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-boom@3.X.X, boom@3.x.x:
+boom@3.x.x, boom@3.X.X:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/boom/-/boom-3.2.2.tgz#0f0cc5d04adc5003b8c7d71f42cca7271fef0e78"
   dependencies:
     hoek "4.x.x"
+
+bootstrap-vue@latest:
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/bootstrap-vue/-/bootstrap-vue-0.3.6.tgz#b9e029eb9ae3ffe08d8c2d42f332eed1f9e38f87"
 
 brace-expansion@^1.0.0:
   version "1.1.6"
@@ -2951,7 +2955,7 @@ joi@8.x.x:
     moment "2.x.x"
     topo "2.x.x"
 
-joi@9.x.x, joi@9.X.X:
+joi@9.X.X, joi@9.x.x:
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/joi/-/joi-9.1.1.tgz#357a04c3ad424abcb9790829be8c01a131d93500"
   dependencies:
@@ -5669,6 +5673,10 @@ ws@1.1.1:
 wtf-8@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/wtf-8/-/wtf-8-1.0.0.tgz#392d8ba2d0f1c34d1ee2d630f15d0efb68e1048a"
+
+xhr2@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/xhr2/-/xhr2-0.1.3.tgz#cbfc4759a69b4a888e78cf4f20b051038757bd11"
 
 xml-char-classes@^1.0.0:
   version "1.0.0"
