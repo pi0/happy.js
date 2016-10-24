@@ -33,7 +33,7 @@ export default class AuthPlugin extends BasePlugin {
   preFetch() {
     if (!this.preFetchObj) {
       this.preFetchObj = new Promise((resolve, reject)=> {
-        this.context.resource.get('auth/profile').then(res=> {
+        this.context.resource.get('user').then(res=> {
           if (res.body && res.body.user)
             this.context.store.commit(SET_USER, {user: res.body.user});
           resolve();
@@ -49,7 +49,7 @@ export default class AuthPlugin extends BasePlugin {
   }
 
   login(credentials, cb) {
-    this.context.resource.post('auth/login', credentials).then(response=> {
+    this.context.resource.post('login', credentials).then(response=> {
       if (response.body.token) {
         this.context.cookie.set('token', response.body.token);
         this.preFetch();
