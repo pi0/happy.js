@@ -27,6 +27,8 @@ export default class AuthPlugin extends BasePlugin {
       },
     });
 
+    this.preFetch();
+
   }
 
   preFetch() {

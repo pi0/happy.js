@@ -34,9 +34,11 @@ module.exports = function (options) {
     var app_rendered = false;
     var tail_rendered = false;
 
-    function graceful_end(message) {
-      if (message)
+    function graceful_end(message,err) {
+      if (message) {
         console.error('[SSR] ' + message);
+        console.error(err);
+      }
       if (!head_rendered)
         res.write(html.head);
       if (!app_rendered)
@@ -91,7 +93,7 @@ module.exports = function (options) {
 
     renderStream.on('error', err => {
       console.log('Runtime Error!');
-      return graceful_end(err);
+      return graceful_end(err,err);
     });
 
   }

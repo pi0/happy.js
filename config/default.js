@@ -69,7 +69,6 @@ module.exports = function () {
       }
     },
 
-    // Webpack aliases config
     aliases: {},
 
     vendor: [
@@ -78,7 +77,8 @@ module.exports = function () {
       'vuex',
       Utils.libPath('client/plugins/resource/vue-resource.common.js'),
       'vue-router',
-      'bootstrap-vue'
+      'bootstrap-vue',
+      'vue/dist/vue.common.js',
     ],
 
     // Attempt to use the URL "http://my-private-site.localtunnel.me"

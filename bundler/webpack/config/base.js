@@ -101,8 +101,11 @@ module.exports = function (options) {
       watchDelay: 2000,
     };
 
-    // Eval source maps are so fast
-    config.devtool = '#eval';
+    // Source maps
+    if (options.name != 'ssr')
+      config.devtool = '#eval-source-map';
+    else
+      config.devtool = '#eval';
 
     // Bus Plugin
     const BusPlugin = require('../webpack-bus-plugin');
@@ -111,7 +114,10 @@ module.exports = function (options) {
   } else { // Production Config
 
     // Source maps
-    config.devtool = '#souece-map';
+    // if (options.name != 'ssr')
+      config.devtool = '#cheap-source-map';
+    // else
+    //   config.devtool = '#cheap-eval';
 
     // Pass build environment inside bundle
     // This will Strip comments in Vue code & hort-circuits all Vue.js warning code
@@ -129,6 +135,7 @@ module.exports = function (options) {
     config.plugins.push(new Webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false,
+      keep_fnames: true,
     }));
   }
 

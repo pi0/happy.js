@@ -8,22 +8,28 @@ function init(runtime_context, client_context) {
   //
   resource.options.root = runtime_context.base_url + resource.options.root;
 
+  // (!)
+  if(!router.history){
+    router.history=[];
+  }
+
+
   // Set router's location
   router.push(runtime_context.url);
 
-  // Call preFetch hooks on components matched by the route.
-  // A preFetch hook dispatches a store action and returns a Promise,
-  // which is resolved when the action is complete and store state has been updated.
+
+// Call preFetch hooks on components matched by the route.
+// A preFetch hook dispatches a store action and returns a Promise,
+// which is resolved when the action is complete and store state has been updated.
   var prefetch = [
     ...router.getMatchedComponents(),
-    client_context.auth,
+    // client_context.auth,
   ];
 
   return Promise.all(prefetch.map(component => {
     if (component.preFetch) {
       return component.preFetch(store)
     }
-
   })).then(() => {
 
     // After all preFetch hooks are resolved, our store is now

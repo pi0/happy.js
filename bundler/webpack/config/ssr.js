@@ -9,14 +9,14 @@ module.exports = function () {
   // This is a node.js bundle
   config.target = 'node';
 
-  // config.node = {
+  config.node = {
   //   console: false,
-  //   global: false,
-  //   process: false,
-  //   Buffer: false,
-  //   __filename: false,
-  //   __dirname: false,
-  // };
+    global: false,
+    process: false,
+    Buffer: false,
+    __filename: false,
+    __dirname: false,
+  };
 
   // Client entry
   config.entry = Config.get('entry_client');

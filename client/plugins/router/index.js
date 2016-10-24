@@ -2,6 +2,7 @@ import BasePlugin from '../base';
 
 import VueRouter from 'vue-router';
 import Vue from 'vue';
+import DefaultError from './errors/default.vue';
 
 export default class RouterPlugin extends BasePlugin {
 
@@ -17,9 +18,7 @@ export default class RouterPlugin extends BasePlugin {
     };
 
     // Default Page
-    routerOptions.routes.push(
-      {path: '*', component: require('./errors/default.vue')},
-    );
+    routerOptions.routes.push({path: '*', component: DefaultError});
 
     this.router = new VueRouter(routerOptions);
 

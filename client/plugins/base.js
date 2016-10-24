@@ -1,4 +1,4 @@
-export default class BasePlugin {
+export default class  {
 
   constructor(context, options) {
     this.context = context;
@@ -20,5 +20,4 @@ export default class BasePlugin {
     // Implement Me
   }
 
-};
-
+}
