@@ -113,11 +113,9 @@ module.exports = function (options) {
 
   } else { // Production Config
 
-    // Source maps
+     // Source maps
      if (options.name != 'ssr')
        config.devtool = '#cheap-source-map';
-//     else
- //      config.devtool = '#cheap-eval';
 
     // Pass build environment inside bundle
     // This will Strip comments in Vue code & hort-circuits all Vue.js warning code
@@ -126,17 +124,19 @@ module.exports = function (options) {
     }));
 
     // Minify with dead-code elimination
-    config.plugins.push(new Webpack.optimize.UglifyJsPlugin({
-      compress: {warnings: false},
-      sourceMap: true
-    }));
+    if (options.name != 'ssr')
+        config.plugins.push(new Webpack.optimize.UglifyJsPlugin({
+            compress: {warnings: false},
+            sourceMap: true,
+            keep_fnames: true,
+         }));
 
     // The UglifyJsPlugin will no longer put loaders into minimize mode, and the debug option has been deprecated.
     config.plugins.push(new Webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false,
-      keep_fnames: true,
     }));
+
   }
 
   return config;

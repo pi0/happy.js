@@ -11,7 +11,7 @@ module.exports = function () {
 
   // Client entry
   config.entry = Config.get('entry_client');
-//  config.externals = Config.get('vendor');
+  //config.externals = Config.get('vendor');
 
   // Output settings
   config.output = Object.assign({
