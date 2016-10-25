@@ -60,12 +60,12 @@ module.exports = function (options) {
       // CSS
       {
         test: /\.css$/,
-        loader: 'postcss!css',
+        loader: 'postcss!css?-svgo',
       },
       // SCSS
       {
         test: /\.scss$/,
-        loader: 'postcss!sass'
+        loader: 'postcss!sass?-svgo'
       },
       // Font
       {
@@ -114,10 +114,10 @@ module.exports = function (options) {
   } else { // Production Config
 
     // Source maps
-    // if (options.name != 'ssr')
-      config.devtool = '#cheap-source-map';
-    // else
-    //   config.devtool = '#cheap-eval';
+     if (options.name != 'ssr')
+       config.devtool = '#cheap-source-map';
+     else
+       config.devtool = '#cheap-eval';
 
     // Pass build environment inside bundle
     // This will Strip comments in Vue code & hort-circuits all Vue.js warning code

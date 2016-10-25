@@ -30,7 +30,7 @@ module.exports = function () {
     options: {
       vue: {
         loaders: {
-          'scss': 'vue-style!css!sass', // This will match all <style lang=scss> tags
+          'scss': 'vue-style!css?-svgo!sass', // This will match all <style lang=scss> tags
         }
       }
     }

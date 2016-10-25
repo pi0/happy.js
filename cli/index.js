@@ -10,11 +10,13 @@ switch (action) {
   case 'build':
     Bundler.build();
     break;
-  case 'start':
-    require(Utils.projectPath('src/server'));
+  case '--help':
+    console.log(grey('Usage: ') + yellow('[dev|build|start]'));
+    process.exit();
     break;
   default:
-    console.log(yellow('Usage: ') + yellow('[run|bundle]'));
-    process.exit();
+    Bundler.build(stats=> {
+        require(Utils.projectPath('src/server'));
+    });
     break;
 }

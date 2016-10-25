@@ -4,9 +4,7 @@ const ServerConfig = require('./config/server');
 const Bus = require('../../bus');
 const Webpack = require('webpack');
 
-Bus.name = 'Builder';
-
-module.exports = function () {
+module.exports = function (cb) {
 
   // Sent process env to production
   process.env.NODE_ENV = 'production';
@@ -20,10 +18,9 @@ module.exports = function () {
 
   // Run once
   compiler.run((err, stats)=> {
-    // Bus.message(err);
     Bus.message(stats);
-    // Bus.message('Done!');
-    process.exit();
+    Bus.emit("bundle:build",stats);
+    if(cb) cb(stats);
   });
 
 };
