@@ -36,8 +36,8 @@ module.exports = function (options) {
 
     function graceful_end(message,err) {
       if (message) {
-        console.error('[SSR] ' + message);
-        console.error(err);
+        console.log('[SSR] ' + message);
+        console.log(err);
       }
       if (!head_rendered)
         res.write(html.head);
@@ -71,6 +71,7 @@ module.exports = function (options) {
         // Check for redirects
         if (context.redirect) {
           renderStream.end();
+          console.log('Redirect to: '+context.url);
           return reply.redirect(context.url);
         }
 

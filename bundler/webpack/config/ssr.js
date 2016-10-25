@@ -9,18 +9,9 @@ module.exports = function () {
   // This is a node.js bundle
   config.target = 'node';
 
-  config.node = {
-  //   console: false,
-    global: false,
-    process: false,
-    Buffer: false,
-    __filename: false,
-    __dirname: false,
-  };
-
   // Client entry
   config.entry = Config.get('entry_client');
-  config.externals = Config.get('vendor');
+//  config.externals = Config.get('vendor');
 
   // Output settings
   config.output = Object.assign({

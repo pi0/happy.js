@@ -2,6 +2,8 @@ import BasePlugin from '../base';
 
 export const SET_USER = 'auth/SET_USER';
 
+const inBrowser = typeof window !== 'undefined';
+
 export default class AuthPlugin extends BasePlugin {
 
   init() {
@@ -16,9 +18,7 @@ export default class AuthPlugin extends BasePlugin {
     // Register Auth module on store
     this.context.store.registerModule('auth', {
       state: {
-        user: {
-          name: '',
-        },
+        user: {},
       },
       mutations: {
         [SET_USER](state, payload){

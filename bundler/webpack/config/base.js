@@ -116,8 +116,8 @@ module.exports = function (options) {
     // Source maps
      if (options.name != 'ssr')
        config.devtool = '#cheap-source-map';
-     else
-       config.devtool = '#cheap-eval';
+//     else
+ //      config.devtool = '#cheap-eval';
 
     // Pass build environment inside bundle
     // This will Strip comments in Vue code & hort-circuits all Vue.js warning code
