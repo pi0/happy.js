@@ -1,5 +1,4 @@
 const Path = require('path');
-var windows = process.platform.indexOf("win") === 0;
 
 // Project Root
 // const projectRoot = Path.dirname(Path.resolve(__dirname).split('happy.js')[0]);
@@ -34,6 +33,7 @@ module.exports.deepClone = deepClone;
 // ClearConsole
 function clearConsole() {
   // Based on https://github.com/stevenvachon/cli-clear
+  var windows = process.platform.indexOf("win") === 0;
   var i, lines;
   var stdout = "";
   if (windows === false)

@@ -1,28 +1,16 @@
-const Hapi = require('hapi');
 const Config = require('../config');
-const Bus = require('../bus');
+const Utils = require('../utils');
 
-module.exports = function (options) {
+const ServerFactory = require('./factory');
+const ServerPlugins = require('./plugins');
 
-  // Instance name
-  var name = Bus.name = options.name ? options.name : 'server';
+try {
+  require(Utils.projectPath('app/_server.js'));
+} catch (e) {
 
-  // Create new server
-  const server = new Hapi.Server(Config.get('hapi'));
-  module.exports = server;
+}
 
-  // Set server connection
-  server.connection(Config.get('connection'));
-
-  // Register all plugins
-  server.register(options.plugins, function (err) {
-    if (err) console.error(err);
-
-    // Start server
-    server.start((err) => {
-      if (err) throw err;
-      Bus.message(name + ' is up!');
-    });
-  });
-
-};
+module.exports = ServerFactory({
+  name: Config.get('project.name'),
+  plugins: ServerPlugins({}),
+});

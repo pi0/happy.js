@@ -22,8 +22,8 @@ export default class CookiePlugin extends BasePlugin {
 
   get(name) {
     if (inBrowser) {
-      var v = window.document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-      return v ? v[2] : null;
+      // var v = window.document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+      // return v ? v[2] : null;
     } else {
       return this.context.cookies[name];
     }

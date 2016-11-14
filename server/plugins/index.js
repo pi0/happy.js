@@ -1,4 +1,5 @@
 const Config = require('../../config');
+const Utils = require('../../utils');
 
 const H2O2 = require('h2o2');
 const DatabasePlugin = require('./database');
@@ -31,7 +32,7 @@ module.exports = function (options) {
       key: Config.get('jwt.secret'),
       verifyOptions: Config.get('jwt.verify'),
       ignoreExpiration: Config.get('jwt.ignoreExpiration'),
-      validator: options.auth.validator
+      validator: options.auth ? options.auth.validator : undefined
     },
   });
 
@@ -39,8 +40,9 @@ module.exports = function (options) {
   plugins.push({
     register: RouterPlugin,
     options: {
-      routes: Config.get('routes'),
+      routes: Utils.projectPath('app'),
       include: '**/*.js',
+      ignore: ['_*'],
       log: false,
       view: Config.get('view'),
     }

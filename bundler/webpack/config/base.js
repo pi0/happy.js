@@ -15,6 +15,7 @@ module.exports = function (options) {
     extensions: ['.js', '.vue'],
     alias: Config.get('aliases'),
     modules: [
+      Path.resolve(Utils.projectRoot, ""),
       Path.resolve(Utils.projectRoot, "node_modules"),
       Path.resolve(Utils.libRoot, "node_modules"),
     ]
@@ -34,48 +35,54 @@ module.exports = function (options) {
   // Config Module Loaders
   config.module = {
 
-    loaders: [
+    // avoid webpack shimming process
+    noParse: /es6-promise\.js$/,
+
+    rules: [
       // Vue
       {
         test: /\.vue$/,
-        loader: 'vue'
+        loader: 'vue-loader'
       },
       // Vue HTML
       {
         test: /\.html$/,
-        loader: 'vue-html'
+        loader: 'vue-html-loader'
       },
       // JS
       {
         test: /\.js$/,
-        loader: 'babel',
+        loader: 'buble-loader',
         // important: exclude files in node_modules, otherwise it's going to be really slow!
-        exclude: /node_modules|dist/
+        exclude: /node_modules|dist/,
+        options: {
+          objectAssign: 'Object.assign'
+        }
       },
       // JSON
       {
         test: /\.json$/,
-        loader: 'json'
+        loader: 'json-loader'
       },
       // CSS
       {
         test: /\.css$/,
-        loader: 'postcss!css?-svgo',
+        loader: 'postcss-loader!css-loader?-svgo',
       },
       // SCSS
       {
         test: /\.scss$/,
-        loader: 'postcss!sass?-svgo'
+        loader: 'postcss-loader!sass-loader?-svgo'
       },
       // Font
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
-        loader: 'file'
+        loader: 'file-loader'
       },
       // Media
       {
         test: /\.(png|jpg|gif|svg)$/,
-        loader: 'url',
+        loader: 'url-loader',
         query: {
           // limit for base64 inlining in bytes
           limit: 10000,
@@ -88,6 +95,7 @@ module.exports = function (options) {
         test: /\.node$/,
         loader: "node-loader"
       },
+
     ]
   };
 
@@ -113,9 +121,9 @@ module.exports = function (options) {
 
   } else { // Production Config
 
-     // Source maps
-     if (options.name != 'ssr')
-       config.devtool = '#cheap-source-map';
+    // Source maps
+    if (options.name != 'ssr')
+      config.devtool = '#cheap-source-map';
 
     // Pass build environment inside bundle
     // This will Strip comments in Vue code & hort-circuits all Vue.js warning code
@@ -125,11 +133,11 @@ module.exports = function (options) {
 
     // Minify with dead-code elimination
     if (options.name != 'ssr')
-        config.plugins.push(new Webpack.optimize.UglifyJsPlugin({
-            compress: {warnings: false},
-            sourceMap: true,
-            keep_fnames: true,
-         }));
+      config.plugins.push(new Webpack.optimize.UglifyJsPlugin({
+        compress: {warnings: false},
+        sourceMap: true,
+        keep_fnames: true,
+      }));
 
     // The UglifyJsPlugin will no longer put loaders into minimize mode, and the debug option has been deprecated.
     config.plugins.push(new Webpack.LoaderOptionsPlugin({

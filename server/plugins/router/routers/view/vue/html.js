@@ -9,11 +9,16 @@ module.exports = function (path) {
   var i = template.indexOf('{{ APP }}');
 
   // Styles are injected dynamically via vue-style-loader in development
-  var style = isProd ? '<link rel="stylesheet" href="/dist/styles.css">' : '';
+  // var style = isProd ? '<link rel="stylesheet" href="/dist/styles.css">' : '';
 
   return {
-    head: template.slice(0, i).replace('{{ STYLE }}', style),
+
+    head: template.slice(0, i)
+      .replace('{{ STYLE }}', '')
+      .replace('{{ TITLE }}', 'App Title'),
+
     tail: template.slice(i + '{{ APP }}'.length)
+
   };
 
 

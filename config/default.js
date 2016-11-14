@@ -6,11 +6,11 @@ module.exports = function () {
 
     root: Utils.projectPath('.'),
 
-    entry_client: Utils.projectPath('src/client/index.js'),
-    entry_server: Utils.projectPath('src/server/index.js'),
+    entry_client: Utils.libPath('client/index.js'),
+    entry_server: Utils.libPath('server/index.js'),
 
-    public: Utils.projectPath('src/client/public'),
-    assets: Utils.projectPath('src/client/public/assets'),
+    public: Utils.projectPath('client/public'),
+    assets: Utils.projectPath('client/public/assets'),
 
     // Client Dists
     dist: {
@@ -27,12 +27,10 @@ module.exports = function () {
       filename: 'server.js',
     },
 
-    routes: Utils.projectPath('src/server/routes'),
-
     view: {
       vue: {
         ssr: true,
-        template: Utils.projectPath('src/client/public/index.html'),
+        template: Utils.libPath('client/public/index.html'),
       }
     },
 
@@ -65,7 +63,7 @@ module.exports = function () {
     hapi: {
       debug: {
         log: ['error', 'info'],
-        request: ['error']
+        // request: ['error']
       }
     },
 
@@ -75,10 +73,9 @@ module.exports = function () {
       'vue',
       'vuex-router-sync',
       'vuex',
-      Utils.libPath('client/plugins/resource/vue-resource.common.js'),
       'vue-router',
-      'bootstrap-vue',
       'vue/dist/vue.common.js',
+      Utils.libPath('client/plugins/resource/vue-resource.common.js'),
     ],
 
     // Attempt to use the URL "http://my-private-site.localtunnel.me"

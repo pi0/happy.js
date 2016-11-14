@@ -7,22 +7,18 @@ function register(server, options, next) {
   var routers = [
     {
       register: AutoRouter,
-      options: {
-        routes: options.routes,
-      }
+      options,
     },
     {
       register: AssetRouter,
     },
-  ];
-
-  server.register(routers, ()=> {
-    server.register({
+    {
       register: ViewRouter,
       options: options.view,
-    }, next);
-  });
+    },
+  ];
 
+  server.register(routers, next);
 }
 
 register.attributes = {

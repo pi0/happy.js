@@ -6,7 +6,6 @@ import StorePlugin from './store';
 import CookiePlugin from './cookie';
 import SyncPlugin from './sync';
 import AuthPlugin from './auth';
-import BootstrapPlugin from './bootstrap';
 
 export default class extends BasePlugin {
 
@@ -15,9 +14,9 @@ export default class extends BasePlugin {
     new StorePlugin(this.context, this.options.store);
     new SyncPlugin(this.context, this.options.sync);
     new ResourcePlugin(this.context, this.options.resource);
-    new CookiePlugin(this.context, this.options.cookie);
-    new AuthPlugin(this.context, this.options.auth);
-    new BootstrapPlugin(this.context, this.options.bootstrap);
+    // new CookiePlugin(this.context, this.options.cookie);
+    //new AuthPlugin(this.context, this.options.auth);
+    // new BootstrapPlugin(this.context, this.options.bootstrap);
   }
 
 };

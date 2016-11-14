@@ -1,8 +1,10 @@
-import BasePlugin from '../base';
-
 import VueRouter from 'vue-router';
 import Vue from 'vue';
+
+import BasePlugin from '../base';
+
 import DefaultError from './errors/default.vue';
+import ClientRoutes from './routes'
 
 export default class RouterPlugin extends BasePlugin {
 
@@ -13,7 +15,7 @@ export default class RouterPlugin extends BasePlugin {
 
     // Create a new router
     let routerOptions = {
-      routes: this.options.routes ? this.options.routes : [],
+      routes: ClientRoutes,
       mode: 'history',
     };
 
@@ -21,6 +23,8 @@ export default class RouterPlugin extends BasePlugin {
     routerOptions.routes.push({path: '*', component: DefaultError});
 
     this.router = new VueRouter(routerOptions);
+
+    //router.beforeEach(() =>window.scrollTo(0, 0));
 
     // Set Default Renderer
     this.context.render = createElement=>createElement('router-view');
