@@ -1,4 +1,8 @@
 # Happy.js Framework
+
+# NO LONGER MAINTAINED!
+# Please switch to awesome [Nuxt.js](https://nuxtjs.org/) project. You be will impressed, i promise ;)
+
 **A Modern Solid Web Framework Based On Hapi & Vue.js Developed by Pooya Parsa <pooya@pi0.ir>**
 
          ..   ..  .......  .......  .......  ..   ..            ...  .......         ..::''''::..
